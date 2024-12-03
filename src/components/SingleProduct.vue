@@ -2,7 +2,7 @@
 <template>
     <div class="single-product">
       <div class="img-container">
-        <img :src="reuire" alt="Product Image" />
+        <img src="@/assets/images/p1.jpg" alt="Product Image" />
         <div v-if="product.sale" class="sale">-50%</div>
       </div>
       <div class="product-content">
