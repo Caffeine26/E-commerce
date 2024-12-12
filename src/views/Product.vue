@@ -2,7 +2,6 @@
   <div>
     <img :src="imageSrc" >
     <Navbar />
-    <h1 class="tt">All Products</h1>
     <ProductGrid :products="products" />
   </div>
 </template>
@@ -78,8 +77,5 @@ import ProductGrid from "../components/ProductGrid.vue";
   };
   </script>
 <style>
-.tt{
-  margin-left: 70px;
-  margin-top: 15px;
-}
+
 </style>

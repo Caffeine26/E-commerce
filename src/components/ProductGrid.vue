@@ -18,6 +18,7 @@ import ProductCard from "./ProductCard.vue";
   
   <style scoped>
   .product-grid {
+    width: 1000px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
