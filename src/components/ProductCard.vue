@@ -6,7 +6,14 @@
         <span class="original-price">{{ product.originalPrice }}</span>
         <span class="discounted-price">{{ product.discountedPrice }}</span>
       </p>
-      <button class="add-to-cart">Add to Cart</button>
+      <div class="i">
+        <a href="#"  >
+          <img src="@/assets/img/image2.png" alt="logo" class="add"/>
+        </a>
+        <a href="#" >
+          <img src="@/assets/img/image3.png" alt="logo" class="add"/>
+        </a>
+      </div>
     </div>
   </template>
   
@@ -52,5 +59,11 @@
     cursor: pointer;
     margin-top: 0.5rem;
   }
+  .add{
+    transform: scale(0.7);
+  }
+  .i{
+  }
+  
   </style>
   
