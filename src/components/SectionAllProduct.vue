@@ -42,12 +42,13 @@
     "Best Seller",
     "Popular",
     "Feature Product",
+    "shop by skin concern"
   ]);
   const activeIndex = ref(0);
   
   const products = ref([
     {
-      img: "@/assets/images/p1.jpg",
+      img: "@/assets/images/p2.jpg",
       sale: true,
       name: "Numbuzin Sunscreen",
       price: "$32.00",
@@ -115,6 +116,13 @@
     margin: 0 auto;
     padding: 20px;
   }
+  .category-header h3 {
+  padding-top: 20px;
+  font-size: 100px;  /* Adjust the font size as needed */
+  font-family: 'time new romain';  /* Specify the desired font-family */
+  font-weight: 600;
+  line-height: 25px;
+}
   
   .category-header {
     display: flex;
