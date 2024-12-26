@@ -10,8 +10,8 @@
                 </div>
                 <img src="../assets/img/arrow-right-wide-fill.svg" alt="">
             </div>
-            
         </div>
+
         <div class="productDescription">
             <h2> {{ name }}</h2>
             <p class="subtext"> {{ reviewAmount }} reviews</p>
@@ -21,6 +21,7 @@
             </div>
             
             <div id="pdesc">{{ briefDescription }}</div>
+
             <div class="qty">
                 <p class="subtext">Quantity</p>
                 <div class="qtyAmount">
@@ -29,30 +30,21 @@
                     <button class="qtyAmountEle" @click="increment"> + </button>
                 </div>
             </div>
+
             <div class="total">
                 <p class="subtext">Total</p>
                 <span class="totalPrice">${{ total }}</span>
             </div>
 
             <div class="cartNfav">
-            <button class="addToCart">ADD TO CART</button>
-            <button class="favicon">
-                <img src="../assets/img/heart-line.svg" alt="favicon">
-            </button>
+                <button class="addToCart">ADD TO CART</button>
+                <button class="favicon">
+                    <img src="../assets/img/heart-line.svg" alt="favicon">
+                </button>
+            </div>
         </div>
-        </div>
-
-        
-   
-        
-        
-
-
     </section>
     
-    
-  
-
 </template>
 
 <script>
@@ -82,9 +74,6 @@ export default{
             this.quantity++
             this.total = this.quantity * this.price
         },
-       
-        
-        
     },
     methods : {
         displayImg(imgUrl){
@@ -94,7 +83,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 .mainproductImg{
     width:600px;
     height:490px;
@@ -132,7 +121,8 @@ export default{
     /* background-color: red; */
     display:flex;
     flex-direction:row;
-    width: 100vw;
+    width: fit-content;
+
     
 }
 #pdesc{
@@ -167,8 +157,6 @@ export default{
     justify-content: space-between;
     align-items: center;
     width: 40%;
-    
-    
 }
 .qtyAmount{
     display: flex;
