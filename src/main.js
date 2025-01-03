@@ -10,6 +10,7 @@ import ProductDetails from './components/ProductDetails.vue'
 import Review from './components/Review.vue'
 import UserDetails from './components/UserDetails.vue'
 import SignupOptions from './components/SignupOptions.vue'
+import Banner from './components/Banner.vue'
 
 const app = createApp(App)
 
@@ -18,7 +19,7 @@ app.component('product-details', ProductDetails)
 app.component('review', Review)
 app.component('user-details', UserDetails)
 app.component('signup-options', SignupOptions)
-
+app.component('banner', Banner)
 
 app.use(createPinia())
 app.use(router)
