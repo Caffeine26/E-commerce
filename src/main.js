@@ -19,6 +19,7 @@ app.component('review', Review)
 app.component('user-details', UserDetails)
 app.component('signup-options', SignupOptions)
 
+
 app.use(createPinia())
 app.use(router)
 

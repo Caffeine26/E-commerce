@@ -1,5 +1,5 @@
 {
-  "name": "vue-project",
+  "name": "e-commerce_landpage",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,6 +10,7 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "e-commerce_landpage": "file:",
     "pinia": "^2.2.6",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
