@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <Products />
-    <Footer/>
+    <MainLayoutComponent />
   </div>
 </template>
 
 <script>
-import Footer from "./components/Footer.vue";
-import Products from "./views/Product.vue";
+import MainLayoutComponent from "./components/MainLayoutComponent.vue";
 export default {
   name: "App",
   components: { 
-    Products,
-    Footer,
+    MainLayoutComponent,
    },
 };
 </script>

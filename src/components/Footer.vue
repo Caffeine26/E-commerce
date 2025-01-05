@@ -20,13 +20,12 @@
       <!-- Social Media Section -->
       <div class="section">
         <h3>Follow us</h3>
-        <ul>
-          <li v-for="(platform, index) in socialPlatforms" :key="index">
-            <a :href="platform.link">
-              <img :src="/assets/img"  class="icon" />
-              {{ platform.name }}</a>
-          </li>
-        </ul>
+        <a href="#" class="f"><img src="@/assets/img/image22.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Facebook</a>
+        <a href="#" class="f"><img src="@/assets/img/image33.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Instagram</a>
+        <a href="#" class="f"><img src="@/assets/img/image44.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Telegram</a>
+        <a href="#" class="f"><img src="@/assets/img/image55.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Tiktok</a>
+
+        
       </div>
 
       <!-- Contact Section -->
@@ -64,18 +63,20 @@ export default {
   data() {
     return {
       mores: ["All Product", "FAQ", "About us", "Blogs", "Privacy Policy"],
-      socialPlatforms: [
-        { name: "FaceBook" , link: "#" ,image:"/assets/img/image22.png"},
-        { name: "Instagram", link: "#" },
-        { name: "Telegram", link: "#" },
-        { name: "TikTok", link: "#" },
-      ],
     };
   },
 };
 </script>
 
 <style scoped>
+.ii{
+  width: 15px;
+  height: 15px;
+}
+.f{
+  width: auto;
+  height: 10px;
+}
 .i{
   font-size: 15px;
 }

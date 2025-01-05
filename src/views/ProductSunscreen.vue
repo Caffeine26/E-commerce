@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import Navbar from "../components/Navbar.vue";
+import Navbar from "../components/NavbarSunscreen.vue";
 import ProductGrid from "../components/ProductGrid.vue";
   export default {
     name: "Products",
