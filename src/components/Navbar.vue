@@ -18,7 +18,7 @@
         <li><a href="#">Shop by Brands</a></li>
       </ul>
     </div>
-    <h1 class="tt">All Products</h1>
+    <h1 class="tt">Shop by Brands</h1>
   </nav>
   
 </template>
@@ -77,16 +77,16 @@ export default {
 }
 .tt{
   text-align: center;
-  font-size: 40px;
-  background-color: #ffffff4f;
-  margin-top: 70px;
+  font-size: 65px;
+  color: white;
+  margin-top: 22px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .background{
-  background-color: #b9e4eb;
-  height: 300px;
+  background-color: #83a98d;
+  height: 250px;
   margin-left: 70px;
   width: 1000px;
-  background-image: url('@/assets/img/background.png');
   background-repeat: no-repeat; /* Prevents repeating the image */
   background-size: cover;      /* Makes the image cover the entire element */
   background-position: center;

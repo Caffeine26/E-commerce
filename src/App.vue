@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <Products />
-    <Footer/>
+    <NavbarAllproductpage/>
+    <BrandGrid/>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Footer from "./components/Footer.vue";
-import Products from "./views/Product.vue";
+import BrandGrid from "./components/BrandGrid.vue";
+import NavbarAllproductpage from "./components/Navbar.vue";
 export default {
   name: "App",
   components: { 
-    Products,
+    NavbarAllproductpage,
+    BrandGrid,
     Footer,
    },
 };
