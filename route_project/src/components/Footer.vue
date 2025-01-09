@@ -1,164 +1,161 @@
 <template>
-    <footer id="footer" class="footer">
-      <div class="footer-content">
-        <!-- Logo Section -->
-        <div class="footer-logo">
-          <img src="@/assets/Logo.png" alt="Logo" class="footer-logo-img" />
-          <p class="footer-description">The best place to find everything you need!</p>
-        </div>
-  
-        <!-- Quick Links Section -->
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/faq">FAQ</a></li>
-            <li><a href="/contact">Contact Us</a></li>
-            <li><a href="/privacy-policy">Privacy Policy</a></li>
-          </ul>
-        </div>
-  
-        <!-- Social Media Section -->
-        <div class="footer-social">
-          <h4>Follow Us</h4>
-          <div class="social-icons">
-            <a href="#" target="_blank" class="social-icon">
-              <img src="@/assets/p1.jpg" alt="Facebook" />
-            </a>
-            <a href="#" target="_blank" class="social-icon">
-              <img src="@/assets/p1.jpg" alt="Instagram" />
-            </a>
-            <a href="#" target="_blank" class="social-icon">
-              <img src="@/assets/p1.jpg" alt="Twitter" />
-            </a>
-          </div>
-        </div>
-  
-        <!-- Contact Information Section -->
-        <div class="footer-contact">
-          <h4>Contact Us</h4>
-          <p>📞 +1 234 567 890</p>
-          <p>📧 <a href="mailto:info@mywebsite.com">info@mywebsite.com</a></p>
-          <p>📍 <a href="https://maps.google.com" target="_blank">Our Location</a></p>
-        </div>
+  <div class="footer-container">
+    <div class="footer">
+      <!-- Welcome Section -->
+      <div class="section">
+        <img  src="@/assets/img/logo1.png" alt="Logo" class="logo" />
+        <p class="i">Welcome to our little cozy site.</p>
       </div>
-  
-      <!-- Copyright Section -->
-      <div class="footer-bottom">
-        <p>&copy; 2024 My Website. All Rights Reserved.</p>
+
+      <!-- Mores Section -->
+      <div class="section">
+        <h3>Mores</h3>
+        <ul>
+          <li v-for="(item, index) in mores" :key="index">
+            <a href="#">{{ item }}</a>
+          </li>
+        </ul>
       </div>
-    </footer>
-  </template>
+
+      <!-- Social Media Section -->
+      <div class="section">
+        <h3>Follow us</h3>
+        <a href="#" class="f"><img src="@/assets/img/image22.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Facebook</a>
+        <a href="#" class="f"><img src="@/assets/img/image33.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Instagram</a>
+        <a href="#" class="f"><img src="@/assets/img/image44.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Telegram</a>
+        <a href="#" class="f"><img src="@/assets/img/image55.png" alt="logo" class="ii">&nbsp;&nbsp;&nbsp;Tiktok</a>
+
+        
+      </div>
+
+      <!-- Contact Section -->
+      <div class="section contact-info">
+        <h3>Contact us</h3>
+        <p><span>☎️</span> +855 97 742 938 9</p>
+        <p>
+          <span>📧</span>
+          <a href="mailto:seoulglam@gmail.com">seoulglam@gmail.com</a>
+        </p>
+        <p>
+          <span>📍</span>
+          <a href="https://maps.app.goo.gl/xyz" target="_blank">Location Map</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Copyright Section -->
+     <div class="ruler">_____________________________________________________________________________________________________________</div>
+    <div class="copyright">
+      <p class="gg">Copyright - 2023 by SEOUL GLAM. All rights reserved.</p>
+      <div class="payment">
+        <p>Accept Payment:</p>
+        <img src="@/assets/img/Wing Bank.png" alt="logo" class="qr">
+        <img src="@/assets/img/aba.png" alt="logo" class="qr">
+        <img src="@/assets/img/khr.png" alt="logo" class="qr">
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Footer",
+  data() {
+    return {
+      mores: ["All Product", "FAQ", "About us", "Blogs", "Privacy Policy"],
+    };
+  },
+};
+</script>
+
+<style scoped>
+.ii{
+  width: 15px;
+  height: 15px;
+}
+.f{
+  width: auto;
+  height: 10px;
+}
+.i{
+  font-size: 15px;
+}
+.footer-container {
+  width:100%;
+  margin: 0 auto;
+  background-color: #3e4a3c;
+  color: #fff;
+  font-family:serif;
+  font-size: 10px;
   
-  <script>
-  export default {};
-  </script>
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  height: 200px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ddd;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.logo {
+  width: 60px;
+  border-radius: 50%;
+  margin-left: 50px;
+}
+
+.contact-info span {
+  margin-right: 5px;
+}
+
+.copyright {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 6px;
+  color: #ddd;
+  display: flex;
+  justify-content: space-evenly;
   
-  <style scoped>
-  .footer {
-    background-color: #333;
-    color: white;
-    font-family: 'Arial', sans-serif;
-    padding: 40px 20px;
-    text-align: left;
-  }
-  
-  .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 30px;
-  }
-  
-  .footer-logo {
-    flex: 1;
-    max-width: 200px;
-  }
-  
-  .footer-logo-img {
-    width: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .footer-description {
-    font-size: 14px;
-    color: #ccc;
-  }
-  
-  .footer-links,
-  .footer-social,
-  .footer-contact {
-    flex: 1;
-  }
-  
-  .footer-links h4,
-  .footer-social h4,
-  .footer-contact h4 {
-    margin-bottom: 10px;
-    font-size: 16px;
-  }
-  
-  .footer-links ul,
-  .footer-contact p {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-links li,
-  .footer-contact a {
-    font-size: 14px;
-    margin: 5px 0;
-  }
-  
-  .footer-links a,
-  .footer-contact a {
-    color: #ccc;
-    text-decoration: none;
-  }
-  
-  .footer-links a:hover,
-  .footer-contact a:hover {
-    color: #0073e6;
-  }
-  
-  .footer-social .social-icons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .social-icon img {
-    width: 30px;
-    height: 30px;
-  }
-  
-  .footer-bottom {
-    background-color: #222;
-    color: #ccc;
-    padding: 10px;
-    text-align: center;
-    margin-top: 30px;
-  }
-  
-  .footer-bottom p {
-    font-size: 12px;
-  }
-  
-  @media (max-width: 768px) {
-    .footer-content {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .footer-logo,
-    .footer-links,
-    .footer-social,
-    .footer-contact {
-      text-align: center;
-    }
-  
-    .footer-links ul {
-      padding: 0;
-    }
-  }
-  </style>
-  
+}
+.payment{
+  display: flex;
+  margin-left: 10px;
+}
+.qr{
+  margin-left: 7px;
+  margin-top: -3px;
+}
+.gg{
+  margin-left: 100px;
+}
+.ruler{
+  margin-left: 280px;
+}
+</style>

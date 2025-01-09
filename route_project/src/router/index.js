@@ -4,6 +4,7 @@ import Promotions from '@/views/PromotionsView.vue';
 import AllProducts from '@/views/AllProductView.vue';
 import Categories from '@/views/CategoriesView.vue';
 import ShopBySkinConcern from '@/views/ShopBySkinConcernView.vue';
+import Login from '@/views/LoginView.vue'; // Import LoginView
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -11,6 +12,7 @@ const routes = [
   { path: '/all-products', name: 'AllProducts', component: AllProducts },
   { path: '/categories', name: 'Categories', component: Categories },
   { path: '/shop-by-skin-concern', name: 'ShopBySkinConcern', component: ShopBySkinConcern },
+  { path: '/login', name: 'Login', component: Login }, // Login route
 ];
 
 const router = createRouter({
