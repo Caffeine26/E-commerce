@@ -1,7 +1,7 @@
 <template>
   <section class="login">
       <div class="container">
-        <img id="loginCover" src="./assets/img/greenperfume.jpg" alt="benton">
+        <img id="loginCover" src="@/assets/img/greenperfume.jpg" alt="benton">
     
         <div class="content">
           <user-details 
@@ -43,6 +43,8 @@ export default{
 *{
   font-family: 'QuickSand';
   color: black;
+  
+  
 }
 .login{
   width: 100vw;
@@ -51,6 +53,8 @@ export default{
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  
 }
 .container{
   width: 60%;

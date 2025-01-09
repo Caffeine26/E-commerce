@@ -15,13 +15,15 @@
             </div>
           </div>
         </div>
+        <button @click="getProducts">click me</button>
+        <button @click="getProductsByBrand('SKIN1004')">get SKIN1004</button>
         <div class="products-wrapper">
           <button class="scroll-btn left" @click="scrollLeft">
             &#x276E; <!-- Unicode for a left arrow -->
           </button>
           <div class="products" ref="productsContainer">
             <!-- Use the SingleProduct component and pass the product data -->
-            <SingleProduct v-for="product in products" :key="product.name" :product="product" />
+            <SingleProduct v-for="product in store.products" :key="product.id" :product="product" />
           </div>
           <button class="scroll-btn right" @click="scrollRight">
             &#x276F; <!-- Unicode for a right arrow -->
@@ -32,10 +34,41 @@
     </div>
   </template>
   
+
   <script setup>
-  import { ref } from "vue";
+  import { computed, ref } from "vue";
   import SingleProduct from './SingleProduct.vue'; // Import the new SingleProduct component
+  import { useProductStore } from "@/store/Products";
+  import { reactive } from 'vue';
   
+  const store = useProductStore()
+
+
+  // const props = defineProps({
+  //   myproducts: Array
+    
+  // });
+
+  function getProducts(){
+    for(let product of store.products){
+      // console.log(product)
+      let imageArray = product.image.split(',')
+      product.image = imageArray
+    }
+
+    console.log(store.products)
+  }
+
+  function getProductsByBrand(brandname){
+    console.log(store.getProductsByBrand(brandname))
+  }
+  function sortProductsAsc(productsArray){
+    console.log(store.sortProductsByAscPrice(productsArray))
+  }
+  function sortProductsDesc(productsArray){
+    console.log(store.sortProductsByDescPrice(productsArray))
+  }
+
   const tabs = ref([
     "New Arrivals",
     "Specials",
@@ -108,7 +141,7 @@
       behavior: "smooth",
     });
   };
-  </script>
+ </script>
   
   <style scoped>
   .container {

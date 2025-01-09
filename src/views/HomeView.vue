@@ -2,6 +2,7 @@
    <div>
       <Header/>
       <Banner/>
+      <star-rating></star-rating>
       <SectionAllProduct />
       <SectionShopBySkinConcern/>
       <SectionNewArrivial/>
@@ -10,6 +11,7 @@
    </div>
 </template>
 <script setup>
+import StarRating from "@/components/StarRating.vue";
 import Banner from "@/components/Banner.vue";
 import Header from "@/components/Header.vue";
 import SectionAllProduct from "@/components/SectionAllProduct.vue";
