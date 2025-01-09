@@ -13,7 +13,7 @@
         brands: [
           { name: "Dr. Althea", logo: "/src/assets/img/DrAlthea.png" },
           { name: "Numbuzin", logo: "src/assets/img/Numbuzin.png" },
-          { name: "The Odinary", logo: "src/assets/img/photo_2024-11-26_20-36-54.jpg" },
+          { name: "The Ogit checkoutdinary", logo: "src/assets/img/photo_2024-11-26_20-36-54.jpg" },
           { name: "Torriden", logo: "src/assets/img/Torriden.png" },
           { name: "Fwee", logo: "src/assets/img/Fwee.png" },
           { name: "Jumiso", logo: "src/assets/img/Jumiso.png" },
