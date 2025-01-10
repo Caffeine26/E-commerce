@@ -61,13 +61,19 @@ export default{
     data(){
         return{
             quantity : 1,
-            total : 0.00,
+            total : this.price,
             displayedImg : 'src/assets/img/cetaphil_green.png',
         }
     },
     computed  : {
         decrement(){
-            this.quantity--
+            if(this.quantity < 2){
+                this.quantity = 1
+            }
+            else{
+                this.quantity--
+            }
+            
             this.total = this.quantity * this.price
         },
         increment(){

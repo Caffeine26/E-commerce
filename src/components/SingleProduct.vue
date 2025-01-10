@@ -2,13 +2,13 @@
 <template>
     <div class="single-product">
       <div class="img-container">
-        <img src="@/assets/images/p1.jpg" alt="Product Image" />
-        <div v-if="product.sale" class="sale">-50%</div>
+        <img :src="product.image" alt="Product Image" />
+        <div v-if="product.promotionAsPercentage" class="sale">-{{product.promotionAsPercentage}}%</div>
       </div>
       <div class="product-content">
         <h5 class="name">{{ product.name }}</h5>
         <div class="rating">
-          <span class="price">{{ product.price }}</span>
+          <span class="price">${{ product.price }}</span>
           <span class="icon">
             <img src="@/assets/heart.svg" alt="Favorite Icon" />
             <img src="@/assets/cart.svg" alt="Cart Icon" />

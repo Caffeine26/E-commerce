@@ -13,6 +13,7 @@ import SignupOptions from './components/SignupOptions.vue'
 import Banner from './components/Banner.vue'
 
 const app = createApp(App)
+const pinia = createPinia()
 
 app.component('product-description', ProductDescription)
 app.component('product-details', ProductDetails)
@@ -21,7 +22,7 @@ app.component('user-details', UserDetails)
 app.component('signup-options', SignupOptions)
 app.component('banner', Banner)
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')

@@ -32,7 +32,7 @@
           action="Log in"
           ></signup-options>
         </div>
-        <img id="loginCover" src="./assets/img/bluemoisture.jpg" alt="bluemoisture">
+        <img id="loginCover" src="@/assets/img/bluemoisture.jpg" alt="bluemoisture">
       </div>
   </section>
 </template>
