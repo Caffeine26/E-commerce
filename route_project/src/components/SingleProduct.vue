@@ -1,7 +1,6 @@
 <template>
   <div class="single-product">
     <div class="img-container">
-      <!-- Bind the image source dynamically -->
       <img :src="product.img" :alt="product.name" />
       <div v-if="product.sale" class="sale">-50%</div>
     </div>
@@ -10,7 +9,12 @@
       <div class="rating">
         <span class="price">{{ product.price }}</span>
         <span class="icon">
-          <img src="@/assets/heart.svg" alt="Favorite Icon" />
+          <img
+            src="@/assets/heart.svg"
+            alt="Favorites"
+            @click="toggleFavorite(product)"
+            :class="{ active: isFavorite(product.id) }"
+          />
           <img src="@/assets/cart.svg" alt="Cart Icon" />
         </span>
       </div>
@@ -18,18 +22,42 @@
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  product: {
-    type: Object,
-    required: true,
+<script>
+import { useFavoriteStore } from '@/stores/Favorite';
+
+export default {
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
   },
-});
+  computed: {
+    // Check if the product is in the favorites list
+    isFavorite() {
+      return (productId) => {
+        const favoriteStore = useFavoriteStore();
+        return favoriteStore.favorites.some(fav => fav.id === productId); // Check if the product is in the favorites list
+      };
+    },
+  },
+  methods: {
+    // Add or remove from favorites
+    toggleFavorite(product) {
+      const favoriteStore = useFavoriteStore();
+      if (this.isFavorite(product.id)) {
+        favoriteStore.removeFavorite(product.id); // Remove from favorites
+      } else {
+        favoriteStore.addFavorite(product); // Add to favorites
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
 .single-product {
-  flex: 0 0 calc(25% - 30px); /* Adjust for four products per row */
+  flex: 0 0 calc(25% - 30px);
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -45,7 +73,6 @@ const props = defineProps({
   left: 0;
   padding: 9px;
   background: red;
-  right: auto;
   font-weight: 700;
   font-size: 12px;
   text-align: center;
@@ -90,5 +117,9 @@ const props = defineProps({
   width: 20px;
   margin-left: 8px;
   cursor: pointer;
+  transition: transform 0.3s;
+}
+.rating .icon img.favorite-icon:hover {
+  transform: scale(1.2);
 }
 </style>

@@ -10,7 +10,7 @@
   <script setup>
   import Header from "@/components/Header.vue"
   import Footer from "@/components/Footer.vue";
-  import Poster from "@/components/P"
+  
 </script>
 <style scoped>
 .container{

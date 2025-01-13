@@ -3,164 +3,243 @@
   <div class="action-icons">
     <img src="@/assets/img/image1.png" alt="Translate" />
     <img src="@/assets/search.svg" alt="Search" @click="toggleSearch" />
-    <img src="@/assets/heart.svg" alt="Favorites" />
+    <div class="favorite-icon" @click="toggleFavoriteSidebar">
+      <img src="@/assets/heart.svg" alt="Favorites" />
+      <span v-if="favoriteCount > 0" class="favorite-count">{{ favoriteCount }}</span>
+    </div>
     <img src="@/assets/user.svg" alt="User" @click="goToLogin" />
     <img src="@/assets/cart.svg" alt="Cart" />
   </div>
 
-  <header class="header">
-    <div class="container">
-      <!-- Logo Section -->
-      <div class="logo">
-        <router-link to="/">
-          <img src="@/assets/Logo.png" alt="Website Logo" />
-        </router-link>
-      </div>
+  <div class="container">
+    <!-- Logo Section -->
+    <div class="logo">
+      <router-link to="/">
+        <img src="@/assets/Logo.png" alt="Website Logo" />
+      </router-link>
+    </div>
 
-      <!-- Navigation Links -->
-      <nav class="nav-links">
-        <router-link to="/" class="nav-item">Home</router-link>
-        <router-link to="/all-products" class="nav-item">All Products</router-link>
-        <router-link to="/promotions" class="nav-item">Promotions</router-link>
-        <div class="dropdown">
-          <router-link to="/categories" class="nav-item">Categories</router-link>
-          <div class="dropdown-menu">
-            <router-link to="/categories/1">Category 1</router-link>
-            <router-link to="/categories/2">Category 2</router-link>
-            <router-link to="/categories/3">Category 3</router-link>
+    <!-- Navigation Links -->
+    <nav class="nav-links">
+      <router-link to="/" class="nav-item">Home</router-link>
+      <router-link to="/all-products" class="nav-item">All Products</router-link>
+      <router-link to="/promotions" class="nav-item">Promotions</router-link>
+      <div class="dropdown">
+        <router-link to="/categories" class="nav-item">Categories</router-link>
+        <div class="dropdown-menu">
+          <router-link to="/categories/1">Category 1</router-link>
+          <router-link to="/categories/2">Category 2</router-link>
+          <router-link to="/categories/3">Category 3</router-link>
+        </div>
+      </div>
+      <router-link to="/shop-by-skin-concern" class="nav-item">Shop by Skin Concern</router-link>
+      <router-link to="/brands" class="nav-item">Shop by Brands</router-link>
+    </nav>
+  </div>
+
+  <!-- Search Modal -->
+  <div v-if="isSearchVisible" class="search-overlay" @click.self="toggleSearch">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search for products..."
+        v-model="searchQuery"
+      />
+      <button @click="handleSearch">Search</button>
+    </div>
+  </div>
+
+  <!-- Favorite Sidebar -->
+  <div v-if="isFavoriteSidebarVisible" class="favorite-sidebar">
+    <div class="favorite-header">
+      <h3>Your Favorites</h3>
+      <button @click="toggleFavoriteSidebar">Close</button>
+    </div>
+    <div class="favorite-list">
+      <div v-if="favorites.length > 0">
+        <div v-for="product in favorites" :key="product.id" class="favorite-item">
+          <img :src="product.image" alt="Product Image" />
+          <div>
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.price }}</p>
           </div>
         </div>
-        <router-link to="/shop-by-skin-concern" class="nav-item">Shop by Skin Concern</router-link>
-        <router-link to="/brands" class="nav-item">Shop by Brands</router-link>
-      </nav>
-    </div>
-
-    <!-- Search Modal -->
-    <div v-if="isSearchVisible" class="search-overlay" @click.self="toggleSearch">
-      <div class="search-box">
-        <input
-          type="text"
-          placeholder="Search for products..."
-          v-model="searchQuery"
-        />
-        <button @click="handleSearch">Search</button>
       </div>
+      <p v-else>No favorite products added yet.</p>
     </div>
-  </header>
+  </div>
 </template>
 
 <script>
-import Banner from './Banner.vue';
 export default {
-  components: {
-    Banner, // Register the Banner component
-  },
   data() {
     return {
       isSearchVisible: false,
+      isFavoriteSidebarVisible: false,
       searchQuery: '',
+      favorites: [], // List of favorite products
     };
   },
+  computed: {
+    favoriteCount() {
+      return this.favorites.length;
+    },
+  },
   methods: {
-    // Toggle the search modal visibility
     toggleSearch() {
       this.isSearchVisible = !this.isSearchVisible;
     },
-    
-    // Navigate to the login page
-    goToLogin() {
-      this.$router.push('/login'); // Navigate to the login route
+    toggleFavoriteSidebar() {
+      this.isFavoriteSidebarVisible = !this.isFavoriteSidebarVisible;
     },
-
-    // Handle search logic (you can define this further)
+    goToLogin() {
+      this.$router.push('/login');
+    },
     handleSearch() {
-      console.log('Searching for:', this.searchQuery);
-      // Add search functionality here
+      const query = this.searchQuery.trim().toLowerCase();
+
+      const routes = {
+        promotions: '/promotions',
+        products: '/all-products',
+        categories: '/categories',
+        "skin concern": '/shop-by-skin-concern',
+        brands: '/brands',
+      };
+
+      const matchedRoute = Object.keys(routes).find((key) =>
+        query.includes(key)
+      );
+
+      if (matchedRoute) {
+        this.$router.push(routes[matchedRoute]);
+        this.toggleSearch();
+      } else {
+        alert('No results found for your search.');
+      }
     },
   },
-};
-</script>
-
-<script setup>
-import { ref } from 'vue';
-
-// State variables
-const isSearchVisible = ref(false);
-const searchQuery = ref('');
-
-// Toggle search modal
-const toggleSearch = () => {
-  isSearchVisible.value = !isSearchVisible.value;
-};
-
-// Handle search functionality
-const handleSearch = () => {
-  if (searchQuery.value.trim()) {
-    console.log('Searching for:', searchQuery.value);
-    // Add your search logic here
-    toggleSearch(); // Close the search modal after searching
-  }
 };
 </script>
 
 <style scoped>
-/* Ensure the header spans the full width */
-.header {
-  width: 100%; /* Full viewport width */
-  height: 10vh; /* Height relative to viewport */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Align vertically to the center */
-  align-items: center; /* Align horizontally to the center */
-  background-color: rgb(244, 201, 227);
-  padding: 5px 0; /* Inner spacing */
+.favorite-icon {
   position: relative;
-  z-index: 1000;
+  cursor: pointer;
 }
 
-/* Adjust the container to span full width */
+.favorite-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.favorite-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.favorite-header {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f2c0e4;
+  border-bottom: 1px solid #ddd;
+}
+
+.favorite-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.favorite-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.favorite-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+/* In your global CSS file */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body, #app {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Header styling */
+
 .container {
-  width: 100%; /* Full width */
-  margin: 0; /* Remove default margin */
+  width: calc(100% + 300px); /* This adds extra width to the container */
+  height: 10vh;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 10px;
-  padding-left: 10px;
-  margin: 20px;
-  box-sizing: border-box;
+  background-color: #f2c0e4;
+  margin-left: -150px; /* Move the container to the left by 150px */
+  margin-bottom:1px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow below the header */
 }
 
 .logo {
-  padding-right: 200px;
+  padding-right: 170px;
 }
 
-/* Logo */
 .logo img {
-  height: 50px;
+  height: 70px;
   width: auto;
+  margin-left:100px;
 }
 
-/* Navigation Links */
 .nav-links {
   display: flex;
   gap: 20px;
+
   align-items: center;
 }
 
 .nav-item {
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  color: #333333;
+  font-size: 20px;
+  font-weight: 700;
+  color: #120808;
   transition: color 0.3s ease;
+  margin: 17px;
+  padding-left: 5px;
 }
 
 .nav-item:hover {
   color: #ff6b6b;
 }
 
-/* Dropdown */
 .dropdown {
   position: relative;
 }
@@ -195,16 +274,14 @@ const handleSearch = () => {
   background-color: #f8f8f8;
 }
 
-/* Action Icons */
 .action-icons {
   display: flex;
   justify-content: flex-end;
 }
 
-/* Action Icons Styling */
 .action-icons img {
-  height: 24px;
-  width: 24px;
+  height: 30px;
+  width: 34px;
   margin-left: 15px;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -214,7 +291,6 @@ const handleSearch = () => {
   transform: scale(1.1);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -225,7 +301,6 @@ const handleSearch = () => {
   }
 }
 
-/* Search Overlay Styles */
 .search-overlay {
   position: fixed;
   top: 0;

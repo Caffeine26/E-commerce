@@ -35,7 +35,8 @@ defineProps({
 .content {
   background: rgba(0, 0, 0, 0.5);
   padding: 20px;
-  border-radius: 8px;
+  margin-bottom:10px;
+ 
 }
 
 button {

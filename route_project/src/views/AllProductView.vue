@@ -1,6 +1,11 @@
 <template>
   <div>
     <Header/>
+    <h1 class="container_text">
+      <div class="content">
+        ALL PRODUCTS
+      </div>
+     </h1>
     <ProductGrid :products="products"/>
     <Footer />
   </div>
@@ -61,3 +66,58 @@ const products = ref([
   },
 ]);
 </script>
+<style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure full viewport height */
+}
+
+.container_text {
+  text-align: center;
+  font-size: 65px;
+  color: white;
+  width: calc(100% + 300px); /* Match the Header's width */
+  margin-left: -150px; /* Match the Header's left margin */
+  margin-bottom: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  height: 350px; /* Min height */
+  background-image: url('@/assets/img/banner1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.content {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px 20px;
+  width: 100%; /* Adjust width to fit within the parent container */
+  height: 30%; /* Ensure the height is 100% of the parent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center the text inside content */
+}
+
+
+
+
+
+
+
+  
+  </style>
+  
+
+
