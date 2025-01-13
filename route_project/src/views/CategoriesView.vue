@@ -7,11 +7,9 @@
       <Footer/>
     </div>
   </template>
-  <script setup>
-  import Header from '@/components/Header.vue';
-  import Poster from '@/components/Poster.vue';
-  import Footer from '@/components/Footer.vue';
-
+<script setup>
+  import Header from "@/components/Header.vue"
+  import Footer from "@/components/Footer.vue";
   
 </script>
 <style scoped>

@@ -1,5 +1,8 @@
 <template>
-  <RouterView />
+
+  <div id="app">
+    <RouterView />
+  </div>
 </template>
 
 <script>
@@ -47,5 +50,10 @@ export default{
 </script>
 
 <style scoped>
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 </style>
