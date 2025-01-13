@@ -81,14 +81,16 @@ export default {
   font-size: 15px;
 }
 .footer-container {
-  width:100%;
-  margin: 0 auto;
+  width: calc(100% + 300px); /* Match the header width */
+  margin-left: -150px; /* Align it the same way as the header */
   background-color: #3e4a3c;
   color: #fff;
-  font-family:serif;
+  font-family: serif;
   font-size: 10px;
-  
+  padding: 20px 0;
 }
+
+
 
 .footer {
   display: flex;
