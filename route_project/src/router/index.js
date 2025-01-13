@@ -11,6 +11,8 @@ import ShopByBrand from '@/views/ShopByBrand.vue'; // Renamed for consistency
 import BrandProducts from '@/components/BrandProduct.vue'; // Fixed import name for consistency
 import SignUP from '@/views/SignUP.vue';
 import SignupOptions from '@/components/SignupOptions.vue';
+import ProductView from '@/views/ProductView.vue';
+
 
 // Define routes
 const routes = [
@@ -59,6 +61,15 @@ const routes = [
     path: '/signup',
     name: 'SignUp',
     component: SignUP,
+  },
+  { 
+    path: '/product', 
+    name: 'Product', 
+    component: ProductView 
+  },
+  { 
+    path: '/all-products/:productId', 
+    component: ProductView 
   },
 ];
 

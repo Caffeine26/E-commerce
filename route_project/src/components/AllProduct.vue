@@ -11,7 +11,10 @@
         </button>
         <div class="products" ref="productsContainer">
           <!-- Use the SingleProduct component and pass the product data -->
-          <SingleProduct v-for="product in products" :key="product.name" :product="product" />
+          <SingleProduct v-for="product in store.products" 
+          :key="product.id" 
+          :product="product"
+          />
         </div>
         <button class="scroll-btn right" @click="scrollRight">
           &#x276F; <!-- Unicode for a right arrow -->
@@ -26,11 +29,15 @@
 
 <script setup>
 import { ref } from "vue";
+import { useProductStore } from './../stores/Products'
 import SingleProduct from './SingleProduct.vue'; // Import the new SingleProduct component
 
 // Import images for products
 import p1 from "@/assets/img/p1.jpg";
 import p2 from "@/assets/img/banner1.jpg";
+
+const store = useProductStore()
+
 
 const activeIndex = ref(0);
 
@@ -135,7 +142,7 @@ const scrollRight = () => {
 
 .products {
   display: flex;
-  overflow-x: scroll;
+  overflow-x: hidden;
   gap: 30px;
   scroll-behavior: smooth;
 }

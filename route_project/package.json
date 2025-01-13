@@ -10,6 +10,7 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "pinia": "^2.3.0",
     "route_project": "file:",
     "vue": "^3.5.13",
