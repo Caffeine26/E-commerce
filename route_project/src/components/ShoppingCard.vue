@@ -1,5 +1,4 @@
 <template>
-  <NavbarCleanser />
   <div class="shopping-cart-container">
     <h2 class="shop">Shopping Cart</h2>
     <div class="shopping-cart">
@@ -54,13 +53,9 @@
 </template>
 
 <script>
-import NavbarCleanser from './NavbarCleanser.vue';
 
 export default {
   name: "ShoppingCart",
-  components: {
-    NavbarCleanser,
-  },
   data() {
     return {
       cartItems: [
