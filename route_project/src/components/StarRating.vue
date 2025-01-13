@@ -21,16 +21,46 @@
         Rating: {{ currentRating }} / {{ totalStars }}
       </div>
     </div>
+
+    <UserComment
+    :instruction="instruction"
+    :productId="productId"
+    :currentRating="currentRating"
+    :inputType="inputType"
+    ></UserComment>
+
+    
 </template>
   
 <script>
+import { useProductStore } from '@/stores/Products';
+import UserComment from './UserComment.vue';
+
 export default {
+setup(){
+  const store = useProductStore()
+  return { store }
+},
+components : {
+  UserComment
+},
+props : {
+  productId: Number
+},
 data() {
     return {
     totalStars: 5, // Total number of stars
     currentRating: 0, // Current rating the user has selected
     hoverRatingValue: 0, // Store the rating value when hovering over stars
+    instruction: 'Write down your experience',
+    inputType: 'review'
+    
+    
     };
+},
+computed : {
+  
+  
 },
 methods: {
     // Set the current rating when a star is clicked
@@ -44,7 +74,21 @@ methods: {
     // Reset the hover state when the mouse leaves the stars
     resetHover() {
     this.hoverRatingValue = 0;
-    }
+    },
+    
+    // submit(){
+    //   this.getCurrentDate()
+    //   let review = { profile: 'https://www.searchenginediscovery.com/ourteam_1.jpg', name: 'placeholder', date: this.currentDate , comment:this.comment, rating:this.currentRating }
+
+    //   const pid = this.productId-1
+    //   console.log('pid=',pid)
+    //   const selectedReview = this.store.previews[pid].reviews
+    //   console.log('reviews', selectedReview)
+    //   selectedReview.unshift(review)
+    //   console.log(review)
+    //   console.log(selectedReview)
+    // },
+    
 },
 computed: {
     // Dynamically calculate the filled or empty class for stars
@@ -60,8 +104,11 @@ computed: {
 
 <style scoped>
 .star-rating {
-font-size: 30px;
-cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 .star {
@@ -81,4 +128,7 @@ color: lightgray;
 margin-top: 10px;
 font-size: 16px;
 }
+
+
+
 </style>

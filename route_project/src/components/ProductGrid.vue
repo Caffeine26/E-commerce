@@ -4,7 +4,7 @@
       <input id="search" type="text" placeholder="Search product">
       <label for="filter"></label>
       <select name="filter" id="filter" @change="filter">
-        <option value="AZ">A-Z</option>
+        <option value="AZ" selected>A-Z</option>
         <option value="ZA">Z-A</option>
         <option value="ascPrice">(Price) Low to High</option>
         <option value="descPrice">(Price) High to Low</option>
@@ -15,7 +15,9 @@
     
     
     <div class="product-grid">
-      <SingleProduct v-for="product in products" :key="product.id" :product="product" />
+      <SingleProduct v-for="product in this.products" 
+      :key="product.id" 
+      :product="product" />
     </div>
   </div>
   
@@ -23,16 +25,45 @@
 
 <script>
 import SingleProduct from "./SingleProduct.vue";
+import { useProductStore } from './../stores/Products'
 
 export default {
   name: "ProductGrid",
   components: { SingleProduct }, // Register the correct component
-  props: {
-    products: Array,
+  data(){
+    return{
+      products: this.store.products,
+    }
   },
-  computed : {
-    fiter(){
-      console.log("hello")
+  setup(){
+    const store = useProductStore()
+    return { store }
+  },
+  methods : {
+    filter(event){
+      const selectedOption = event.target.value;
+      console.log(selectedOption)
+      console.log(this.store.products)
+      if(selectedOption === "AZ"){
+        this.products = this.store.sortProductsByAlpabetAZ(this.store.products)
+      }
+      if(selectedOption === "ZA"){
+        this.products = this.store.sortProductsByAlpabetZA(this.store.products)
+      }
+      if(selectedOption === "ascPrice"){
+        this.products = this.store.sortProductsByAscPrice(this.store.products)
+      }
+      if(selectedOption === "descPrice"){
+        this.products = this.store.sortProductsByDescPrice(this.store.products)
+      }
+      if(selectedOption === "popularity"){
+        this.products = this.store.sortProductsByPopularity(this.store.products)
+      }
+      if(selectedOption === "rating"){
+        this.products = this.store.sortProductsByRating(this.store.products)
+      }
+
+
     }
   }
 };

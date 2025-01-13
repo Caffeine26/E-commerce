@@ -1,14 +1,16 @@
 <template>
-  <div class="single-product">
+  <router-link :to="productLink">
+    <div class="single-product" :id="product.id" @click="returnId">
     <div class="img-container">
       <!-- Bind the image source dynamically -->
-      <img :src="product.img" :alt="product.name" />
-      <div v-if="product.sale" class="sale">-50%</div>
+      <img v-if="product.image"
+       :src="product.image" :alt="product.name" />
+      <div v-if="product.promotionAsPercentage" class="sale">-{{ product.promotionAsPercentage }}%</div>
     </div>
     <div class="product-content">
       <h5 class="name">{{ product.name }}</h5>
       <div class="rating">
-        <span class="price">{{ product.price }}</span>
+        <span class="price">${{ product.price }}</span>
         <span class="icon">
           <img src="@/assets/heart.svg" alt="Favorite Icon" />
           <img src="@/assets/cart.svg" alt="Cart Icon" />
@@ -16,15 +18,25 @@
       </div>
     </div>
   </div>
+  </router-link>
+  
 </template>
 
-<script setup>
-const props = defineProps({
-  product: {
-    type: Object,
-    required: true,
+<script>
+export default{
+  props: {
+    product : Object
+    
   },
-});
+  computed : {
+    returnId(){
+      console.log(this.product.id)
+    },
+    productLink(){
+      return '/all-products/'+this.product.id
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -39,12 +51,15 @@ const props = defineProps({
 .single-product .img-container {
   position: relative;
 }
+.sale{
+  border-bottom-right-radius: 10px;
+}
 .single-product .img-container .sale {
   position: absolute;
   top: 0;
   left: 0;
   padding: 9px;
-  background: red;
+  background: rgb(216, 104, 104);
   right: auto;
   font-weight: 700;
   font-size: 12px;

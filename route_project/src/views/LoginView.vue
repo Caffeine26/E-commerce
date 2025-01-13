@@ -1,7 +1,7 @@
 <template>
     <section class="login">
       <div class="login-container">
-        <img id="loginCover" src="./assets/img/greenperfume.jpg" alt="benton" />
+        <img id="loginCover" src="./../assets/img/greenperfume.jpg" alt="benton" />
         <div class="login-content">
           <user-details 
             welcomeMessage="Welcome Back!"
