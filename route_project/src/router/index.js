@@ -10,12 +10,14 @@ import Login from '@/views/LoginView.vue';
 import ShopByBrand from '@/views/ShopByBrand.vue'; // Renamed for consistency
 import BrandProducts from '@/components/BrandProduct.vue'; // Fixed import name for consistency
 import SignUP from '@/views/SignUP.vue';
-import SignupOptions from '@/components/SignupOptions.vue';
+import CategoryProduct from '@/components/CategoryProduct.vue';
 import ProductView from '@/views/ProductView.vue';
 import Cart from '@/views/Cart.vue';
 import DeliveryView from '@/views/DeliveryView.vue';
 import PaymentView from '@/views/PaymentView.vue';
 import SuccessView from '@/views/SuccessView.vue';
+import SearchResult from '@/views/SearchResult.vue';
+
 
 
 // Define routes
@@ -39,7 +41,17 @@ const routes = [
     path: '/categories',
     name: 'Categories',
     component: Categories,
+    
   },
+  
+
+  {
+    path: '/categories/:id',
+    name: 'CategoryProduct',
+    component: CategoryProduct,
+    props: true, // Pass route params as props
+  },
+  
   {
     path: '/shop-by-skin-concern',
     name: 'ShopBySkinConcern',
@@ -94,6 +106,11 @@ const routes = [
     path: '/success', 
     name: 'SuccessView', 
     component: SuccessView 
+  },
+  {
+    path: '/search',
+    name: 'SearchResult',
+    component: SearchResult,
   },
 ];
 

@@ -40,8 +40,6 @@ export const useProductStore = defineStore('product', {
             this.cart = []
         }
 
-
-    },
     state(){
         return{
             products: [],
@@ -171,5 +169,6 @@ export const useProductStore = defineStore('product', {
             ]
         }
     },
-    
-  })  
+  },
+  
+});
