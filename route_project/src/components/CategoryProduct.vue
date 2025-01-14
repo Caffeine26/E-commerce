@@ -18,7 +18,8 @@
   </template>
   
   <script>
-  import Footer from './Footer.vue';
+  import { useProductStore } from '@/stores/Products';
+import Footer from './Footer.vue';
   import Header from './Header.vue';
   import SingleProduct from './SingleProduct.vue';
   
@@ -28,6 +29,10 @@
       SingleProduct,
       Header,
       Footer,
+    },
+    setup(){
+      const store=useProductStore()
+      return { store }
     },
     props: ['id'],  // Receive 'id' as a prop from the router
     data() {
@@ -55,11 +60,16 @@
           '12': 'Skincare Set',
         },
         categoryName: '',  // Will be dynamically set based on the id
+        catId : 0
       };
     },
     computed: {
       filteredProducts() {
-        return this.products.filter(product => product.category === this.categoryName);
+        return this.store.products.filter(product => {
+          let str = product.categoryId
+          console.log('pid= ',str)
+          console.log('catid=',this.catId)
+          product.categoryId === this.catId});
       },
     },
     watch: {
@@ -70,6 +80,7 @@
     methods: {
       updateCategory(id) {
         this.categoryName = this.categoryMapping[id] || 'Unknown Category';
+        this.catId = id
       },
     },
     mounted() {

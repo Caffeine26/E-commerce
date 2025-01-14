@@ -4,7 +4,7 @@
     <Header />
 
     
-    <GridComponent :categories="categories" @category-click="handleCategoryClick" />
+    <GridComponent :categories="store.concerns" @category-click="handleCategoryClick" />
 
     <!-- Footer Component -->
     <Footer />
@@ -16,6 +16,7 @@ import Header from "@/components/Header.vue";
 
 import Footer from "@/components/Footer.vue";
 import GridComponent from "@/components/GridComponent.vue";
+import { useProductStore } from "@/stores/Products";
 
 export default {
   components: {
@@ -23,6 +24,10 @@ export default {
     GridComponent,
     Footer,
   },
+  setup(){
+    const store = useProductStore()
+    return { store }
+  }
 };
 </script>
 

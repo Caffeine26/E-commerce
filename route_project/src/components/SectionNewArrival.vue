@@ -20,7 +20,7 @@
 
     <!-- Single Product Section (Horizontal Scroll) -->
     <div class="single-product-section">
-      <SingleProduct v-for="product in products" :key="product.name" :product="product" />
+      <SingleProduct v-for="product in myproducts" :key="product.name" :product="product" />
     </div>
 
     <!-- SEE ALL Button -->
@@ -38,7 +38,17 @@ import Poster from "./Poster.vue"; // Import the Poster component
 // Import images for promotions/posters
 import promo1 from "@/assets/img/banner1.jpg";
 import promo2 from "@/assets/img/banner2.jpg";
+import { useProductStore } from "@/stores/Products";
+const store = useProductStore()
 
+
+function myproducts(){
+  let myproducts = []
+  for(let i in 4){
+    myproducts.push(store.products[i])
+  }
+  return myproducts
+}
 const posters = ref([
   {
     title: "Summer Sale - Up to 50% Off",
@@ -52,57 +62,6 @@ const posters = ref([
     backgroundImage: promo2,
     buttonText: "Discover More"
   }
-]);
-
-const products = ref([
-  {
-    img: promo1,
-    sale: true,
-    name: "Numbuzin Sunscreen",
-    price: "$32.00",
-  },
-  {
-    img: promo2,
-    sale: false,
-    name: "Moisturizing Lotion",
-    price: "$24.00",
-  },
-  {
-    img: "@/assets/images/p3.jpg",
-    sale: true,
-    name: "Hydrating Serum",
-    price: "$40.00",
-  },
-  {
-    img: "@/assets/images/p4.jpg",
-    sale: false,
-    name: "Anti-aging Cream",
-    price: "$28.00",
-  },
-  {
-    img: "@/assets/images/p5.jpg",
-    sale: true,
-    name: "Vitamin C Face Mask",
-    price: "$22.00",
-  },
-  {
-    img: "@/assets/images/p6.jpg",
-    sale: false,
-    name: "Eye Care Gel",
-    price: "$18.00",
-  },
-  {
-    img: "@/assets/images/p7.jpg",
-    sale: true,
-    name: "Sunscreen SPF 50+",
-    price: "$35.00",
-  },
-  {
-    img: "@/assets/images/p8.jpg",
-    sale: false,
-    name: "Facial Cleanser",
-    price: "$20.00",
-  },
 ]);
 </script>
 

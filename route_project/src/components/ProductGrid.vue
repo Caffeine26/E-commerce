@@ -15,7 +15,7 @@
     
     
     <div class="product-grid">
-      <SingleProduct v-for="product in this.products" 
+      <SingleProduct v-for="product in products" 
       :key="product.id" 
       :product="product" />
     </div>
@@ -45,22 +45,22 @@ export default {
       console.log(selectedOption)
       console.log(this.store.products)
       if(selectedOption === "AZ"){
-        this.products = this.store.sortProductsByAlpabetAZ(this.store.products)
+        this.products = this.store.sortProductsByAlpabetAZ(this.products)
       }
       if(selectedOption === "ZA"){
-        this.products = this.store.sortProductsByAlpabetZA(this.store.products)
+        this.products = this.store.sortProductsByAlpabetZA(this.products)
       }
       if(selectedOption === "ascPrice"){
-        this.products = this.store.sortProductsByAscPrice(this.store.products)
+        this.products = this.store.sortProductsByAscPrice(this.products)
       }
       if(selectedOption === "descPrice"){
-        this.products = this.store.sortProductsByDescPrice(this.store.products)
+        this.products = this.store.sortProductsByDescPrice(this.products)
       }
       if(selectedOption === "popularity"){
-        this.products = this.store.sortProductsByPopularity(this.store.products)
+        this.products = this.store.sortProductsByPopularity(this.products)
       }
       if(selectedOption === "rating"){
-        this.products = this.store.sortProductsByRating(this.store.products)
+        this.products = this.store.sortProductsByRating(this.products)
       }
 
 

@@ -57,7 +57,7 @@
         placeholder="Search for products..."
         v-model="searchQuery"
       />
-      <button @click="handleSearch">Search</button>
+      <button @click="handleSearch()">Search</button>
     </div>
   </div>
 
@@ -70,7 +70,7 @@
     <div class="favorite-list">
       <div v-if="favorites.length > 0">
         <div v-for="product in favorites" :key="product.id" class="favorite-item">
-          <img :src="product.img" alt="Product Image" />
+          <img :src="product.image[0]" alt="Product Image" />
           <div>
             <h4>{{ product.name }}</h4>
             <p>${{ product.price }}</p>
@@ -134,7 +134,7 @@ export default {
       this.$router.push('/shopping-cart');
     },
     handleSearch() {
-      const query = this.searchQuery.trim().toLowerCase();
+      const query = this.searchQuery.trim();
       const productStore = useProductStore();
 
       // Search products by name and brand
@@ -187,7 +187,7 @@ export default {
   right: 0;
   width: 550px;
   height: 100%;
-  background-image: linear-gradient(to bottom, #b0bfab, #71769e);
+  background-image: linear-gradient(to bottom, #b0bfab, #124527);
   box-shadow: -2px 0 15px rgba(0, 0, 0, 0.15);
   z-index: 2000;
   transform: translateX(0);
@@ -217,7 +217,7 @@ export default {
 }
 
 .favorite-header button {
-  background: #ff6b6b;
+  background: #7fc7da;
   color: #fff;
   border: none;
   padding: 8px 16px;
@@ -296,8 +296,8 @@ export default {
 }
 
 button {
-  background: #ff6b6b;
-  color: #fff;
+  background: #e7e2e2;
+  color: #0d0d0d;
   padding: 12px 24px;
   border: none;
   font-size: 16px;
@@ -308,7 +308,7 @@ button {
 }
 
 button:hover {
-  background-color: #e54b4b;
+  background-color: #229533;
 }
 
 /* In your global CSS file */
@@ -405,9 +405,7 @@ html, body, #app {
 .action-icons {
   display: flex;
   justify-content: flex-end;
-  /* background-color: #ff6b6b; */
 }
-
 .action-icons img {
   height: 30px;
   width: 34px;
@@ -473,17 +471,5 @@ html, body, #app {
 
 .search-box button:hover {
   background-color: #ff4a4a;
-}
-#qty{
-  color: whitesmoke;
-  font-size: 10px;
-  font-weight: 700;
-  background-color: #ff6b6b;
-  padding: 0px 5px 0px 5px;
-  border-radius: 50%;
-  float: right;
-  margin-left: -10px;
-  height: fit-content;
- 
 }
 </style>

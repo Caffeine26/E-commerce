@@ -1,193 +1,282 @@
 <template>
-    <section class="signup">
-      <div class="container">
-        <!-- Content Section -->
-        <div class="content">
-          <user-details
-            welcomeMessage="Join SeoulGlam!"
-            hoverGradient01="#7FAFB1"
-            hoverGradient02="#D5E8D4"
-          ></user-details>
-  
-          <!-- Form Section -->
-          <form class="form" @submit.prevent="handleSubmit">
-            <input type="text" v-model="fullName" placeholder="Full Name" required />
-            <input type="email" v-model="email" placeholder="Email" required />
-            <input type="password" v-model="password" placeholder="Password" required />
-  
-            <div class="policyCheck">
-              <label>
-                I agree to the Terms of Use and Privacy Policy.
-                <input type="checkbox" v-model="agreeToTerms" />
-                <span class="checkmark"></span>
-              </label>
-            </div>
-  
-            <button id="signupBtn" type="submit" :disabled="!isFormValid">Sign Up</button>
-          </form>
-  
-          <!-- Login Option -->
-          <signup-options
-            signup="Sign Up"
-            btnColor="#4F9AA0"
-            question="Already have an account?"
-            action="Log in"
-            @navigateToLogin="navigateToLogin"
-          ></signup-options>
+  <section class="signup">
+    <div class="container">
+      <!-- Form Section -->
+      <div class="content">
+        <h1 class="title">Welcome to StyleBodia!</h1>
+        <form class="form" @submit.prevent="handleSubmit">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" v-model="email" placeholder="Enter email" required />
+          </div>
+
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" v-model="password" placeholder="Enter password" required />
+          </div>
+
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" v-model="agreeToTerms" />
+              I have read and agreed to the terms and conditions in Terms of Use and Privacy Policy
+            </label>
+          </div>
+
+          <button id="signupBtn" type="submit" :disabled="!isFormValid">Sign up</button>
+        </form>
+
+        <p class="separator">_____________ OR ______________</p>
+        <p class="separator1">connect with</p>
+        <div class="social-buttons">
+          <a href="#"><img src="@/assets/img/facebook.png" alt="logo" class="img"></a>
+          <a href="#"><img src="@/assets/img/google.png" alt="logo" class="img"></a>
+          <a href="#"><img src="@/assets/img/apple.png" alt="logo" class="img"></a>
+
+
         </div>
-  
-        <!-- Cover Image -->
+
+        <p class="login-option">
+          Already registered? <a @click="navigateToLogin">Log in</a>
+        </p>
+      </div>
+
+      <!-- Image Section -->
+      <div class="image-container">
         <img id="signupCover" src="@/assets/img/bluemoisture.jpg" alt="Signup Cover" />
       </div>
-    </section>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        fullName: '',
-        email: '',
-        password: '',
-        agreeToTerms: false,
-      };
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      agreeToTerms: false,
+    };
+  },
+  computed: {
+    isFormValid() {
+      return this.email && this.password && this.agreeToTerms;
     },
-    computed: {
-      isFormValid() {
-        return this.fullName && this.email && this.password && this.agreeToTerms;
-      },
+  },
+  methods: {
+    navigateToLogin() {
+      this.$router.push({ name: 'Login' });
     },
-    methods: {
-      navigateToLogin() {
-        this.$router.push({ name: 'Login' });
-      },
-      handleSubmit() {
-        try {
-          // Retrieve existing users from localStorage
-          const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-  
-          // Check if the email already exists
-          if (existingUsers.some(user => user.email === this.email)) {
-            alert('User with this email already exists.');
-            return;
-          }
-  
-          // Save new user data
-          const newUser = {
-            fullName: this.fullName,
-            email: this.email,
-            password: this.password,
-          };
-          existingUsers.push(newUser);
-          localStorage.setItem('users', JSON.stringify(existingUsers));
-  
-          alert('Sign Up Successful!');
-          this.$router.push({ name: 'Login' }); // Redirect to Login page
-        } catch (error) {
-          console.error('Sign Up Error:', error);
-          alert('Sign Up failed. Please try again.');
+    resetForm() {
+      this.email = '';
+      this.password = '';
+      this.agreeToTerms = false;
+    },
+    handleSubmit() {
+      try {
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(this.email)) {
+          alert('Please enter a valid email address.');
+          return;
         }
-  
-        // Reset form fields
-        this.fullName = '';
-        this.email = '';
-        this.password = '';
-        this.agreeToTerms = false;
-      },
+
+        // Validate password strength
+        if (this.password.length < 6) {
+          alert('Password must be at least 6 characters long.');
+          return;
+        }
+
+        // Retrieve existing users from localStorage
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Check if the email already exists
+        if (existingUsers.some(user => user.email === this.email)) {
+          alert('User with this email already exists.');
+          return;
+        }
+
+        // Save new user data
+        const newUser = {
+          email: this.email,
+          password: this.password,
+        };
+        existingUsers.push(newUser);
+        localStorage.setItem('users', JSON.stringify(existingUsers));
+
+        alert('Sign Up Successful!');
+        this.$router.push({ name: 'Login' }); // Redirect to Login page
+      } catch (error) {
+        console.error('Sign Up Error:', error);
+        alert('Sign Up failed. Please try again.');
+      } finally {
+        this.resetForm(); // Reset form fields
+      }
     },
-  };
-  </script>
-  
-  
-  <style scoped>
-  /* Common Styles */
-  @font-face {
-    font-family: "QuickSand";
-    src: url("./assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf");
-  }
-  
-  * {
-    font-family: "QuickSand";
-    color: black;
-  }
-  
-  .signup {
-    width: 100vw;
-    height: 100vh;
-    background-image: linear-gradient(to bottom, #7FAFB1, #D5E8D4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .container {
-    width: 60%;
-    height: 80%;
-    border-radius: 40px;
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-  }
-  
-  #signupCover {
-    width: 50%;
-    height: 94%;
-    border-radius: 20px;
-    margin: 20px;
-  }
-  
-  .content {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 150px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    width: 350px;
-  }
-  
-  .form input {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .policyCheck {
-    font-size: 12px;
-    margin: 10px 0;
-  }
-  
-  #signupBtn {
-    width: 100%;
-    padding: 10px;
-    color: white;
-    background-color: #4F9AA0;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  #signupBtn:disabled {
-    background-color: #A5D4D0;
-    cursor: not-allowed;
-  }
-  
-  #signupBtn:hover:not(:disabled) {
-    background-color: #3d7e81;
-  }
-  
-  .checkmark {
-    margin-left: 5px;
-    position: relative;
-    top: 2px;
-  }
-  </style>
-  
+  },
+};
+</script>
+
+
+<style scoped>
+@font-face {
+  font-family: "QuickSand";
+  src: url("./assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf");
+}
+
+* {
+  font-family: "QuickSand", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.title{
+  font-family:  "QuickSand";
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+.signup {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(162, 236, 230, 0.99);
+  position: absolute;
+  left: 0%;
+  top: 0%;
+}
+
+
+.container {
+  width: 58%;
+  height: 90%;
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  width: 50%;
+  height: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: white;
+}
+
+.content h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form .input-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+
+.form .input-group label {
+  font-size: 14px;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.form .input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.checkbox-group {
+  font-size: 9px;
+  margin-bottom: 15px;
+  color: #888;
+}
+
+#signupBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4F9AA0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#signupBtn:disabled {
+  background-color: #A5D4D0;
+  cursor: not-allowed;
+}
+
+.separator {
+  margin: 20px 0;
+  text-align: center;
+  width: 100%;
+  font-size: 10px;
+  color: #888;
+}
+.separator1{
+  width: 100%;
+  font-size: 10px;
+  color: #888;
+  text-align: center;
+}
+
+.social-buttons {
+  width: 100%;
+  display: flex;
+  justify-content:space-around;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+.social-buttons :hover{
+  background: none;
+}
+.img{
+  width: 20px;
+  height: 20px;
+}
+.social-btn {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+
+.login-option {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  width: 100%;
+}
+
+.login-option a {
+  color: #4F9AA0;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.image-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+#signupCover {
+  width: 90%;
+  height: 90%;
+  border-radius: 10px;
+}
+</style>

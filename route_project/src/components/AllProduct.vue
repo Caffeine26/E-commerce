@@ -2,18 +2,14 @@
   <div>
     <div class="container">
       <h3>ALL Product</h3>
-      <div class="category-header">
-
-        <div>{{ sayHi() }}</div>
-        
-      </div>
+      <div class="category-header"></div>
       <div class="products-wrapper">
         <button class="scroll-btn left" @click="scrollLeft">
           &#x276E; <!-- Unicode for a left arrow -->
         </button>
         <div class="products" ref="productsContainer">
           <!-- Use the SingleProduct component and pass the product data -->
-          <SingleProduct v-for="product in products" 
+          <SingleProduct v-for="product in products"
           :key="product.name" 
           :product="product"
           />
@@ -31,17 +27,15 @@
 
 <script setup>
 import { ref } from "vue";
-
 import SingleProduct from './SingleProduct.vue'; // Import the new SingleProduct component
 
 // Import images for products
 import p1 from "@/assets/img/p1.jpg";
 import p2 from "@/assets/img/banner1.jpg";
+import { useProductStore } from "@/stores/Products";
 
 
-function sayHi(){
-  console.log('SAY HI')
-}
+const store = useProductStore()
 
 
 // Define tabs (for categories or filter options)
@@ -50,40 +44,56 @@ function sayHi(){
 const products = ref([
   {
     id: 1,
-    img: p2,
-    sale: true,
-    name: "Numbuzin Sunscreen",
-    price: "$32.00",
+    name: '[Purito Seoul] From Green Avocado Cleansing Balm 100ml',
+    rating : 4,
+    size: '105g',
+    image: ['https://d3i908zd4kzakt.cloudfront.net/data/item/1725944192/thumb-dkqhxkzhecleansing_405x405.jpg'],
+    price: 14,
+    promotionAsPercentage: 30,
+    categoryId: 1,
+    instock: 100,
+    countSold : 15,
+    group : 'Purito Seoul'
   },
   {
-    id:2,
-    img: p1,
-    sale: false,
-    name: "Product 2",
-    price: "$20.00",
-  },
-  { 
-    id:3,
-    img: p1,
-    sale: true,
-    name: "Product 3",
-    price: "$50.00",
-  },
-  {
-    id:4,
-    img: p1,
-    sale: false,
-    name: "Product 4",
-    price: "$25.00",
+    id: 2,
+    name: '[Purito Seoul] Wonder Releaf Centella Daily Sun Lotion 60ml',
+    rating : 4,
+    size: '105g',
+    image: ['https://www.stylekorean.com/data/item/1722930015/thumb-61ZNWFmQuXL._AC_SL1080__405x405.jpg'],
+    price: 15.05,
+    promotionAsPercentage: 37,
+    categoryId: 2,
+    instock: 100,
+    countSold : 15,
+    group : 'Purito Seoul'
   },
   {
-    id:5,
-    img: p1,
-    sale: false,
-    name: "Product 5",
-    price: "$25.00",
+    id: 3,
+    name: '[Purito Seoul] Oat-in Calming Gel Cream 100ml',
+    rating : 4,
+    size: '105g',
+    image: ['https://www.stylekorean.com/data/item/1722928744/thumb-61c7T7mywiL._SL1000__405x405.jpg'],
+    price: 11.2,
+    promotionAsPercentage: 40,
+    categoryId: 3,
+    instock: 100,
+    countSold : 15,
+    group : 'Purito Seoul'
   },
-  // Add more products as needed
+  {
+    id: 4,
+    name: '[Purito Seoul] From Green Cleansing Oil 200ml',
+    rating : 4,
+    size: '105g',
+    image: ['https://www.stylekorean.com/data/item/1722907468/thumb-61Ya6VEtsL._SL1000__405x405.jpg'],
+    price: 14.7,
+    promotionAsPercentage: 40,
+    categoryId: 4,
+    instock: 100,
+    countSold : 15,
+    group : 'Purito Seoul'
+  },
 ]);
 
 // Scrolling logic
@@ -153,6 +163,7 @@ const scrollRight = () => {
   overflow-x: hidden;
   gap: 30px;
   scroll-behavior: smooth;
+  
 }
 
 .scroll-btn {

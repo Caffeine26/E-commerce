@@ -2,7 +2,8 @@
   <div>
     <Header />
     <Promotion />
-    <ProductGrid :products="products" />
+    <ProductGrid :myproducts="promoProducts()" />
+  
     <Footer />
   </div>
 </template>
@@ -17,6 +18,16 @@ import ProductGrid from "@/components/ProductGrid.vue";
 
 // Correct image import
 import img1 from "@/assets/img/p1.jpg"; // Adjust the path to the correct image file
+import { useProductStore } from "@/stores/Products";
+
+const store = useProductStore()
+
+function promoProducts(){
+  let promoProducts = this.store.products.filter(product => product.promotionAsPercentage > 0)
+  console.log(promoProducts)
+  return promoProducts
+}
+
 
 // Define the products array
 const products = ref([

@@ -75,13 +75,14 @@ export default {
 <style scoped>
 .single-product {
   flex: 1 1 22%; /* Adjusted to fit 4 items per row */
-  max-width: 22%; /* Optional: prevents it from growing too wide */
+  max-width: 100%; /* Optional: prevents it from growing too wide */
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s;
   margin: 10px; /* Space between products */
+
 }
 
 .single-product:hover {

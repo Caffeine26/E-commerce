@@ -4,35 +4,22 @@
         <div class="content">CATEGORY</div>
       </h1>
       <!-- Pass categories to GridComponent and handle category-click event -->
-      <GridComponent :categories="categories" @category-click="handleCategoryClick" />
+      <GridComponent :categories="store.categories" @category-click="handleCategoryClick" />
     </div>
   </template>
   
   <script>
-  import GridComponent from './GridComponent.vue';
+  import { useProductStore } from '@/stores/Products';
+import GridComponent from './GridComponent.vue';
   
   export default {
     name: "Category",
     components: {
       GridComponent,
     },
-    data() {
-      return {
-        categories: [
-          { id: 1, name: "Toners", image: "/src/assets/img/toner.png" },
-          { id: 2, name: "Hair Products", image: "/src/assets/img/hair.png" },
-          { id: 3, name: "Shower", image: "/src/assets/img/shower.png" },
-          { id: 4, name: "Moisturizer", image: "/src/assets/img/moisturizer.png" },
-          { id: 5, name: "Pimple Patches", image: "/src/assets/img/patch.png" },
-          { id: 6, name: "Sunscreen", image: "/src/assets/img/sunscreen.png" },
-          { id: 7, name: "Make Up", image: "/src/assets/img/makeup.png" },
-          { id: 8, name: "Cleansers", image: "/src/assets/img/foam.png" },
-          { id: 9, name: "Essence/Serum", image: "/src/assets/img/serum.png" },
-          { id: 10, name: "Double Cleansing", image: "/src/assets/img/double.png" },
-          { id: 11, name: "Masks", image: "/src/assets/img/mask.png" },
-          { id: 12, name: "Skincare Set", image: "/src/assets/img/set.png" },
-        ],
-      };
+    setup(){
+      const store = useProductStore()
+      return { store }
     },
     methods: {
       handleCategoryClick(categoryId) {

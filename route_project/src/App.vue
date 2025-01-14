@@ -6,15 +6,14 @@
 </template>
 
 <script>
-// import { useProductStore } from './stores/Products'
+import { useProductStore } from './stores/Products'
 import axios from 'axios'
 
 export default{
-  /*setup(){
+  setup(){
     const store = useProductStore()
-    const hello = "hello world"
-    return { store, hello }
-  },*/
+    return { store }
+  },
 
   methods : {
     // fetchProducts(){
@@ -30,14 +29,21 @@ export default{
     // }
   },
 
-  /*async created(){
+  async created(){
     try {
       const response = await fetch('http://localhost:3000/api/products');
       const data = await response.json();
       this.store.products = data;
-      
-      this.store.getProductImgs()
       console.log(this.store.products)
+
+      if(this.store.products){
+        this.store.getProductImgs()
+
+      }
+      
+      console.log('hi')
+      console.log('hello')
+      
 
     } catch (error) {
       console.error('Error during mounted lifecycle hook:', error);
@@ -45,7 +51,11 @@ export default{
       this.loading = false;
     }
     
-  }*/
+    
+  },
+  mounted(){
+    
+  }
 }
 
 </script>
