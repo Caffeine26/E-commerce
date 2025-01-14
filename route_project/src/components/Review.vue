@@ -24,7 +24,6 @@
             <div class="reviewBody">
                 <div class="revcontent">{{ review }}</div>
                 <div class="helpBox">
-                    <!-- <div class="likes">{{ this.likes }} found this helpful</div> -->
                     <div class="userOption">
                         <button id="helpful">HELPFUL</button>
                         <button id="report">REPORT</button>
@@ -59,7 +58,7 @@ export default{
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 .username{
     font-size: 20px;
@@ -78,9 +77,10 @@ export default{
 .content{
     display: flex;
     flex-direction: column;
+    /* background-color:aqua; */
 }
 .reviewBody{
-    width: 1000px;
+    width: 800px;
     /* height: 200px; */
     padding: 20px 40px 20px 40px;
     margin-top: 20px;
@@ -88,12 +88,14 @@ export default{
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: flex-start;
     /* background-color: aquamarine; */
 }
 .revcontent{
     font-size: 16px;
     margin-bottom: 20px;
+    /* background-color: #FFC0CB; */
+    
 }
 .helpBox{
     display: flex;

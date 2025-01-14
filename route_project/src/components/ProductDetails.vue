@@ -101,7 +101,7 @@ export default{
 }
 .productDetails{
     /* background-color: aqua; */
-    width: 1340px;
+    width: 1200px;
     border: 2px solid #979797;
     margin: 20px 0 20px 0;
     display: flex;
@@ -126,6 +126,9 @@ button{
     align-items: center;
     margin:0;
     /* background-color: aqua; */
+}
+.header:hover{
+    cursor: pointer;
 }
 .description{
     padding: 30px 50px 30px 50px;

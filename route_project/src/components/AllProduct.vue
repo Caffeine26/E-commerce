@@ -3,6 +3,8 @@
     <div class="container">
       <h3>ALL Product</h3>
       <div class="category-header">
+
+        <div>{{ sayHi() }}</div>
         
       </div>
       <div class="products-wrapper">
@@ -38,6 +40,9 @@ import p2 from "@/assets/img/banner1.jpg";
 
 const store = useProductStore()
 
+function sayHi(){
+  console.log('SAY HI')
+}
 
 const activeIndex = ref(0);
 

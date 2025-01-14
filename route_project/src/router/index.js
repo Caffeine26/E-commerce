@@ -12,6 +12,10 @@ import BrandProducts from '@/components/BrandProduct.vue'; // Fixed import name 
 import SignUP from '@/views/SignUP.vue';
 import SignupOptions from '@/components/SignupOptions.vue';
 import ProductView from '@/views/ProductView.vue';
+import Cart from '@/views/Cart.vue';
+import DeliveryView from '@/views/DeliveryView.vue';
+import PaymentView from '@/views/PaymentView.vue';
+import SuccessView from '@/views/SuccessView.vue';
 
 
 // Define routes
@@ -70,6 +74,26 @@ const routes = [
   { 
     path: '/all-products/:productId', 
     component: ProductView 
+  },
+  { 
+    path: '/shopping-cart', 
+    name: 'Cart', 
+    component: Cart 
+  },
+  { 
+    path: '/delivery', 
+    name: 'DeliveryView', 
+    component: DeliveryView 
+  },
+  { 
+    path: '/payment', 
+    name: 'PaymentView', 
+    component: PaymentView 
+  },
+  { 
+    path: '/success', 
+    name: 'SuccessView', 
+    component: SuccessView 
   },
 ];
 

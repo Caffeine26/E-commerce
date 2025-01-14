@@ -35,6 +35,9 @@ export const useProductStore = defineStore('product', {
                 product.image = imageArray
             }
             console.log("Img Array Retrieved!")
+        },
+        emptyCart(){
+            this.cart = []
         }
 
 
@@ -43,6 +46,7 @@ export const useProductStore = defineStore('product', {
         return{
             products: [],
             categories: [],
+            cart: [],
             previews: [
                 {
                     id : 1,

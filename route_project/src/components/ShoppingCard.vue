@@ -1,7 +1,7 @@
 <template>
   <div class="shopping-cart-container">
     <h2 class="shop">Shopping Cart</h2>
-    <div class="shopping-cart">
+    <div v-if="store.cart.length>0" class="shopping-cart">
       <div class="cart-items">
         <table>
           <thead>
@@ -14,20 +14,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in cartItems" :key="item.id">
+            <tr v-for="item in store.cart" :key="item.id">
               <td class="product-info">
-                <img :src="item.image" alt="Product" />
+                <img :src="item.img" alt="Product" />
                 <p>{{ item.name }}</p>
               </td>
-              <td>${{ item.price.toFixed(2) }}</td>
+              <td>${{ item.unitPrice }}</td>
               <td>
                 <div class="quantity">
                   <button @click="decrement(item.id)">-</button>
-                  <span>{{ item.quantity }}</span>
+                  <span>{{ item.qty }}</span>
                   <button @click="increment(item.id)">+</button>
                 </div>
               </td>
-              <td>${{ (item.price * item.quantity).toFixed(2) }}</td>
+              <td>${{ item.totalPrice }}</td>
               <td class="actions">
                 <a href="#" @click.prevent="removeItem(item.id)">Remove</a><br />
                 <a href="#">Save for Later</a><br />
@@ -37,63 +37,80 @@
           </tbody>
         </table>
       </div>
+
       <div class="order-summary">
         <h3>Order Summary</h3>
         <div class="summary-details">
           <input type="text" placeholder="Enter coupon" class="coupon-input" />
           <button class="apply-btn">Apply</button>
         </div>
-        <p>Subtotal: ${{ total }}</p>
+        <p>Subtotal: ${{ subtotal() }}</p>
         <p>Discount: -</p>
-        <p><strong>Total: ${{ total }}</strong></p>
-        <button class="checkout-btn">Checkout</button>
+        <p><strong>Total: ${{ subtotal() }}</strong></p>
+        <router-link to="/delivery">
+          <button class="checkout-btn">Checkout</button>
+        </router-link>
       </div>
+    </div>
+
+    <div v-else class="emptyCart">
+      <div class="emptyContent">
+        <img src="./../assets/img/empty-cart.png" alt="Empty Cart">
+        <div id="emptyCart">Cart is empty</div>
+        <button id="backtoBrowse"
+        @click="goHome"
+        >Back to browsing</button>
+      </div>
+     
     </div>
   </div>
 </template>
 
 <script>
+import { useProductStore } from '@/stores/Products';
+
 
 export default {
   name: "ShoppingCart",
+
+  setup(){
+    const store = useProductStore()
+    return { store }
+  },
   data() {
     return {
-      cartItems: [
-        {
-          id: 1,
-          name: "Medicube ONE DAY EXOSOME SHOT 7500",
-          price: 21.88,
-          quantity: 1,
-          image: "src/assets/img/cart1.png",
-        },
-        {
-          id: 2,
-          name: "Cosrx Advanced Snail 92 All In One Cream",
-          price: 14.88,
-          quantity: 1,
-          image: "src/assets/img/cart2.png",
-        },
-      ],
+    price : Number,
+    units : Number
     };
   },
   computed: {
-    total() {
-      return this.cartItems
-        .reduce((sum, item) => sum + item.price * item.quantity, 0)
-        .toFixed(2);
-    },
+    goHome(){
+      return this.$router.push('/')
+    }
   },
   methods: {
     increment(id) {
-      const item = this.cartItems.find((item) => item.id === id);
-      item.quantity++;
+      const item = this.store.cart.find((item) => item.id === id);
+      item.qty++;
+      item.totalPrice = parseFloat((item.unitPrice*item.qty).toFixed(2));
     },
     decrement(id) {
-      const item = this.cartItems.find((item) => item.id === id);
-      if (item.quantity > 1) item.quantity--;
+      const item = this.store.cart.find((item) => item.id === id);
+      if (item.qty > 1){
+        item.qty--;
+        item.totalPrice = parseFloat((item.unitPrice*item.qty).toFixed(2));
+      }
     },
     removeItem(id) {
-      this.cartItems = this.cartItems.filter((item) => item.id !== id);
+      this.store.cart = this.store.cart.filter((item) => item.id !== id);
+    },
+    subtotal(){
+      let subtotal = 0;
+      for(let cartItem of this.store.cart){
+        subtotal = subtotal + cartItem.totalPrice
+        // console.log('item price=', cartItem)
+      }
+      return subtotal
     },
   },
 };
@@ -214,5 +231,32 @@ export default {
 
 .checkout-btn:hover {
   background: #f53d56;
+}
+.emptyCart{
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.emptyContent{
+  width: 500px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+#backtoBrowse{
+  padding: 10px 15px 10px 15px;
+  margin: 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 900px;
+  color: white;
+  background-color: #f53d56;
+}
+#backtoBrowse:hover{
+  cursor: pointer;
 }
 </style>

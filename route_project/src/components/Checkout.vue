@@ -22,30 +22,12 @@
         <!-- Payment Method -->
         <div class="payment-method">
           <h2 class="section-title">Payment Method</h2>
-          <div class="payment-options">
-            <div
-              class="payment-option"
-              v-for="method in paymentMethods"
-              :key="method.id"
-              :class="{ selected: selectedPayment === method.id }"
-              @click="selectPayment(method.id)"
-            >
-              <div class="option-header">
-                <input type="radio" :checked="selectedPayment === method.id" />
-                <span class="method-name">{{ method.name }}</span>
-                <div v-if="method.icons" class="method-icons">
-                  <img
-                    v-for="icon in method.icons"
-                    :key="icon"
-                    :src="icon"
-                    alt="Payment Icon"
-                  />
-                </div>
-              </div>
-              <p class="method-description">{{ method.description }}</p>
-            </div>
-          </div>
-          <div v-if="selectedPayment === 1" class="payment-form">
+          <PaymentMethod
+          :method="paymentMethods[0]"
+          :selectedMethod="selectedMethod"
+          @click="selectedPayment(1)"
+          ></PaymentMethod>
+          <div v-if="selectedMethod === 1" class="payment-form">
               <div class="tt">
                 <div class="ff">
                   <label for="cardName">Card Name</label>
@@ -70,10 +52,23 @@
                 </div>
               </div>
           </div>
-          <div v-if="selectedPayment === 2" class="payment-form">
+
+          <PaymentMethod
+          :method="paymentMethods[1]"
+          :selectedMethod="selectedMethod"
+          @click="selectedPayment(2)"
+          ></PaymentMethod>
+          <div v-if="selectedMethod === 2" class="payment-form">
               <p>Scan to pay with any banking app</p>
-              <img src="/src/assets/img/khqr.png" alt="KHQR" />
+              <img id="mykhqr" src="./../assets/img/mykhqr.jpg" alt="KHQR" />
           </div>
+
+
+          <PaymentMethod
+          :method="paymentMethods[2]"
+          :selectedMethod="selectedMethod"
+          @click="selectedPayment(3)"
+          ></PaymentMethod>
         </div>
       </div>
 
@@ -82,8 +77,8 @@
         <h2 class="section-title">Order Summary</h2>
         <div class="summary-details">
           <div class="line-item">
-            <span>Cart Total (2 items)</span>
-            <span>${{ cartTotal }}</span>
+            <span>Cart Total ({{ amountItems }} items)</span>
+            <span>${{ USDPrice() }}</span>
           </div>
           <div class="line-item">
             <span>Delivery fee</span>
@@ -93,13 +88,16 @@
         <div class="total-section">
           <span class="total">Total:</span>
           <div class="total-amount">
-            <select v-model="currency" class="currency-dropdown">
+            <select v-model="currency" 
+            class="currency-dropdown"
+            >
               <option value="USD">USD</option>
               <option value="KHR">KHR</option>
             </select>
-            <span class="total-value">${{ total }}</span>
+            <span class="total-value">{{ totalPrice() }}</span>
           </div>
         </div>
+        
         <button @click="payNow" class="pay-now-btn">Pay Now</button>
       </div>
     </div>
@@ -107,7 +105,17 @@
 </template>
 
 <script>
+import PaymentMethod from './PaymentMethod.vue'
+import { useProductStore } from '@/stores/Products';
+
 export default {
+  components : {
+    PaymentMethod
+  },
+  setup(){
+    const store = useProductStore()
+    return { store }
+  },
   data() {
     return {
       step: 3,
@@ -119,7 +127,7 @@ export default {
           icons: [
             "src/assets/img/visa.png",
             "src/assets/img/mastercard.png",
-            "src/assets/img/jcb.png",
+            "src/assets/img/jcb.jpeg",
           ],
         },
         {
@@ -135,23 +143,50 @@ export default {
           icons: null,
         },
       ],
-      selectedPayment: 1,
-      cartTotal: 21.88,
       deliveryFee: 0.0,
       currency: "USD",
+      selectedMethod : 0
     };
   },
   computed: {
     total() {
       return (this.cartTotal + this.deliveryFee).toFixed(2);
     },
+    amountItems(){
+      return this.store.cart.length
+    }
+    
   },
   methods: {
-    selectPayment(id) {
-      this.selectedPayment = id;
+    selectedPayment(id){
+      this.selectedMethod = id
+    },
+    USDPrice(){
+      let usd = 0;
+      for(let cartItem of this.store.cart){
+        usd = usd + cartItem.totalPrice
+      }
+      return usd
+    },
+    emptyCart(){
+      return this.store.emptyCart
     },
     payNow() {
       alert("Proceeding to payment...");
+      this.store.cart = []
+      console.log(this.store.cart)
+      this.$router.push('/success')
+    },
+    totalPrice(){
+      if(this.currency === 'KHR'){
+        let usdPrice = this.USDPrice()
+        let khrPrice = usdPrice * 4150
+        return khrPrice
+      }
+      if(this.currency === 'USD'){
+        let usdPrice = this.USDPrice()
+        return usdPrice
+      }
     },
   },
 };
@@ -160,11 +195,13 @@ export default {
 <style scoped>
 
 .payment-form {
-    margin-top: 15px;
+    width: 600px;
     display: flex;
     flex-direction: column;
-    width: 200px;
     gap: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #37e7a7;
+    padding: 15px 20px 30px 20px;
 }
 .payment-form label {
     font-size: 12px;
@@ -177,7 +214,7 @@ export default {
 }
 .tt{
   display: flex;
-  gap: 200px;
+  gap: 150px;
 }
 .ff{
   display: flex;
@@ -260,58 +297,9 @@ export default {
   font-weight: bold;
   margin-bottom: 10px;
 }
-
-.payment-options {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.payment-option {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 15px;
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  height: 80px;
-}
-
-.payment-option:hover {
-  background: #f9f9f9;
-}
-
-.payment-option.selected {
-  border-color: #37e7a7;
-  background: #ffffff;
-}
-
-.option-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.option-header input {
-  margin-right: 10px;
-}
-
-.method-name {
-  font-weight: bold;
-  flex: 1;
-}
-
-.method-icons img {
-  width: 50px;
-  height: 25px;
-  margin-left: 10px;
-}
-
-.method-description {
-  font-size: 12px;
-  color: #666;
+#mykhqr{
+  width: 200px;
+  height: 300px;
 }
 
 /* Order Summary */

@@ -39,8 +39,15 @@
             </div>
             
             <div class="price">
-                <p class="subtext">Price</p>
-                <p class="unitPrice">${{ price }}</p>
+                <span class="subtext">Price</span>
+                <div v-if="discount > 0">
+                    <span id="discountedPrice">${{ discountedPrice() }}</span>
+                    <span class="ogPrice">${{ price }}</span>
+                </div>
+                <span v-else-if="discount==0" class="unitPrice">
+                    ${{ price }}
+                </span>
+                
             </div>
             
             <div id="pdesc">{{ briefDescription }}</div>
@@ -60,7 +67,7 @@
             </div>
 
             <div class="cartNfav">
-                <button class="addToCart">ADD TO CART</button>
+                <button class="addToCart" @click="addToCart">ADD TO CART</button>
                 <button class="favicon">
                     <img src="../assets/img/heart-line.svg" alt="favicon">
                 </button>
@@ -71,7 +78,12 @@
 </template>
 
 <script setup>
+import { useProductStore } from '@/stores/Products';
 import { ref, onBeforeMount, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
+    const store = useProductStore()
+
     const props = defineProps ({
         id : Number,
         name : String,
@@ -79,17 +91,28 @@ import { ref, onBeforeMount, watch } from 'vue';
         price : Number,
         briefDescription : String,
         imgUrl : Array,
-        avgRating : Number
+        avgRating : Number,
+        discount : Number
 
     });
 
     let quantity = ref(1)
-    let total = ref(props.price)
+    let total = ref(discountedPrice())
     let displayedImg = ref(props.imgUrl[0])
 
-    // watch(props.imgUrl, (newValue, OldValue)=>{
-    //     console.log(`Image array changed from ${OldValue} to ${newValue}`)
-    // })
+    const route = useRoute()
+    const postId = route.params.productId
+
+    watch(route, (newRoute)=>{
+        // console.log('current route id = ', newRoute)
+        displayedImg.value = props.imgUrl[0]
+        quantity.value = 1
+        total.value = props.price
+    })
+
+    function discountedPrice(){
+      return parseFloat((props.price * ((100-props.discount)/100)).toFixed(2))
+    }
    
     
     function decrement(){
@@ -98,16 +121,33 @@ import { ref, onBeforeMount, watch } from 'vue';
         } else{
             quantity.value--
         }
-        total = quantity.value * props.price
+        total.value = parseFloat((quantity.value * discountedPrice()).toFixed(2))
     };
     function increment(){
         quantity.value++
-        total = quantity.value * props.price
+        total.value = parseFloat((quantity.value * discountedPrice()).toFixed(2))
     };
     
     function displayImg(imgUrl){
-        displayedImg = imgUrl
+        displayedImg.value = imgUrl
     };
+
+    function addToCart(){
+        let price = discountedPrice()
+        const addedProduct = {
+            id : props.id,
+            name : props.name,
+            img : props.imgUrl[0],
+            unitPrice : price,
+            qty : quantity.value,
+            totalPrice : total.value
+        }
+        
+        store.cart.push(addedProduct)
+        alert('Product added to cart')
+        console.log(store.cart)
+    };
+
     // Scrolling logic
     const productsContainer = ref(null);
 
@@ -125,9 +165,7 @@ import { ref, onBeforeMount, watch } from 'vue';
     });
     };
     
-    onBeforeMount(()=>{
-        // console.log(imgUrl[0])
-    })
+    
     
 
 </script>
@@ -188,9 +226,20 @@ import { ref, onBeforeMount, watch } from 'vue';
     color: #969191;
     font-size: 24px;
 }
+.ogPrice{
+    font-size: 32px;
+    text-decoration: line-through;
+    color: #808080;
+}
 .unitPrice{
     font-size: 38px;
     font-weight: bolder;
+}
+#discountedPrice{
+    font-size: 38px;
+    color: #e74c3c;
+    font-weight: bold;
+    margin-right: 10px;
 }
 .price{
     display: flex;
@@ -225,6 +274,9 @@ import { ref, onBeforeMount, watch } from 'vue';
     padding-left: 10px;
     padding-right: 10px;
 }
+.qtyAmountEle:hover{
+    cursor: pointer
+}
 .qtyAmount :nth-child(2) {
     border-left: 1px solid #C1C0C2;
     border-right: 1px solid #C1C0C2;
@@ -252,6 +304,9 @@ import { ref, onBeforeMount, watch } from 'vue';
     background-image: linear-gradient(to right, #6B8E4E, #3C5148);
     border: none;
     border-radius: 15px;
+}
+.addToCart:hover{
+    cursor: pointer;
 }
 .favicon{
     width: 60px;
