@@ -1,24 +1,34 @@
-// stores/Favorite.js (Pinia Store)
+// store/Favorite.js
 import { defineStore } from 'pinia';
 
-export const useFavoriteStore = defineStore('favorite', {
+export const useFavoriteStore = defineStore('Favorite', {
   state: () => ({
-    favorites: [],
+    // Retrieve the favorite list from localStorage or initialize it to an empty array
+    favorites: JSON.parse(localStorage.getItem('favorites')) || [],
   }),
-  getters: {
-    // Get all favorites
-    favoriteCount(state) {
-      return state.favorites.length;
-    },
-  },
+
   actions: {
-    // Add product to favorites
+    // Method to add a product to the favorites list
     addFavorite(product) {
-      this.favorites.push(product);
+      // Check if the product is already in the favorites list
+      const exists = this.favorites.some((fav) => fav.id === product.id);
+      
+      // If the product is not in the list, add it
+      if (!exists) {
+        this.favorites.push(product);
+        this.saveFavorites();
+      }
     },
-    // Remove product from favorites by ID
+
+    // Method to save the favorites list to localStorage
+    saveFavorites() {
+      localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    },
+
+    // Method to remove a product from the favorites list
     removeFavorite(productId) {
-      this.favorites = this.favorites.filter(fav => fav.id !== productId);
+      this.favorites = this.favorites.filter((fav) => fav.id !== productId);
+      this.saveFavorites();
     },
   },
 });

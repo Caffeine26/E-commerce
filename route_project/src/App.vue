@@ -6,15 +6,15 @@
 </template>
 
 <script>
-import { useProductStore } from './stores/Products'
+// import { useProductStore } from './stores/Products'
 import axios from 'axios'
 
 export default{
-  setup(){
+  /*setup(){
     const store = useProductStore()
     const hello = "hello world"
     return { store, hello }
-  },
+  },*/
 
   methods : {
     // fetchProducts(){
@@ -30,7 +30,7 @@ export default{
     // }
   },
 
-  async created(){
+  /*async created(){
     try {
       const response = await fetch('http://localhost:3000/api/products');
       const data = await response.json();
@@ -44,7 +44,7 @@ export default{
       this.loading = false;
     }
     
-  }
+  }*/
 }
 
 </script>

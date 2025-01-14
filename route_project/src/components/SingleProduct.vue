@@ -1,36 +1,33 @@
 <template>
-  <router-link :to="productLink">
-    <div class="single-product" :id="product.id" @click="returnId">
+  <div class="single-product" :id="product.id">
     <div class="img-container">
-
-      <!-- Bind the image source dynamically -->
-      <img v-if="product.image"
-       :src="product.image" :alt="product.name" />
+      <router-link :to="productLink" class="single-product-link">
+        <img v-if="product.img" :src="product.img" :alt="product.name" />
+      </router-link>
       <div v-if="product.promotionAsPercentage" class="sale">-{{ product.promotionAsPercentage }}%</div>
-
     </div>
     <div class="product-content">
       <h5 class="name">{{ product.name }}</h5>
       <div class="rating">
         <span class="price">${{ product.price }}</span>
         <span class="icon">
+          <!-- Favorite Icon -->
           <img
             src="@/assets/heart.svg"
             alt="Favorites"
-            @click="toggleFavorite(product)"
+            @click.stop="toggleFavorite(product)"
             :class="{ active: isFavorite(product.id) }"
           />
+          <!-- Cart Icon -->
           <img src="@/assets/cart.svg" alt="Cart Icon" />
         </span>
       </div>
     </div>
   </div>
-  </router-link>
-  
 </template>
 
 <script>
-import { useFavoriteStore } from '@/stores/Favorite';
+import { useFavoriteStore } from "@/stores/Favorite";
 
 export default {
   props: {
@@ -40,29 +37,19 @@ export default {
     },
   },
   computed: {
-    // Check if the product is in the favorites list
+    productLink() {
+      return `/all-products/${this.product.id}`;
+    },
     isFavorite() {
-      return (productId) => {
-        const favoriteStore = useFavoriteStore();
-        return favoriteStore.favorites.some(fav => fav.id === productId); // Check if the product is in the favorites list
-      };
+      const favoriteStore = useFavoriteStore();
+      return (productId) => favoriteStore.favorites.some((fav) => fav.id === productId);
     },
-     returnId(){
-      console.log(this.product.id)
-    },
-    productLink(){
-      return '/all-products/'+this.product.id
-    }
   },
   methods: {
-    // Add or remove from favorites
     toggleFavorite(product) {
       const favoriteStore = useFavoriteStore();
-      if (this.isFavorite(product.id)) {
-        favoriteStore.removeFavorite(product.id); // Remove from favorites
-      } else {
-        favoriteStore.addFavorite(product); // Add to favorites
-      }
+      // Add product to favorites if it's not already in the list
+      favoriteStore.addFavorite(product);
     },
   },
 };
@@ -70,65 +57,57 @@ export default {
 
 <style scoped>
 .single-product {
-  flex: 0 0 calc(25% - 30px);
+  flex: 1 1 22%; /* Adjusted to fit 4 items per row */
+  max-width: 22%; /* Optional: prevents it from growing too wide */
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s;
+  margin: 10px; /* Space between products */
 }
-.single-product .img-container {
-  position: relative;
-}
-.sale{
-  border-bottom-right-radius: 10px;
-}
-.single-product .img-container .sale {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 9px;
-  background: rgb(216, 104, 104);
-  right: auto;
-  font-weight: 700;
-  font-size: 12px;
-  text-align: center;
-  color: white;
-}
+
 .single-product:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 .img-container {
-  height: 200px;
+  height: 200px; /* Set a fixed height for the image container */
   width: 100%;
   overflow: hidden;
 }
+
 .img-container img {
   height: 100%;
   width: 100%;
   object-fit: cover;
 }
+
 .product-content {
   padding: 10px;
   text-align: center;
 }
+
 .product-content .name {
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
   color: #333;
 }
+
 .product-content .rating {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .rating .price {
   font-size: 16px;
   color: #e74c3c;
   font-weight: bold;
 }
+
 .rating .icon img {
   height: 20px;
   width: 20px;
@@ -136,6 +115,7 @@ export default {
   cursor: pointer;
   transition: transform 0.3s;
 }
+
 .rating .icon img.favorite-icon:hover {
   transform: scale(1.2);
 }

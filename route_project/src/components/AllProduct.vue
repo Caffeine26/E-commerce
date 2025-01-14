@@ -11,8 +11,8 @@
         </button>
         <div class="products" ref="productsContainer">
           <!-- Use the SingleProduct component and pass the product data -->
-          <SingleProduct v-for="product in store.products" 
-          :key="product.id" 
+          <SingleProduct v-for="product in products" 
+          :key="product.name" 
           :product="product"
           />
         </div>
@@ -29,47 +29,50 @@
 
 <script setup>
 import { ref } from "vue";
-import { useProductStore } from './../stores/Products'
+
 import SingleProduct from './SingleProduct.vue'; // Import the new SingleProduct component
 
 // Import images for products
 import p1 from "@/assets/img/p1.jpg";
 import p2 from "@/assets/img/banner1.jpg";
 
-const store = useProductStore()
 
 
-const activeIndex = ref(0);
 
 // Define tabs (for categories or filter options)
 
 // Define products data (including images)
 const products = ref([
   {
+    id: 1,
     img: p2,
     sale: true,
     name: "Numbuzin Sunscreen",
     price: "$32.00",
   },
   {
+    id:2,
     img: p1,
     sale: false,
     name: "Product 2",
     price: "$20.00",
   },
-  {
+  { 
+    id:3,
     img: p1,
     sale: true,
     name: "Product 3",
     price: "$50.00",
   },
   {
+    id:4,
     img: p1,
     sale: false,
     name: "Product 4",
     price: "$25.00",
   },
   {
+    id:5,
     img: p1,
     sale: false,
     name: "Product 5",
