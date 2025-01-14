@@ -8,7 +8,11 @@
       <span v-if="favoriteCount > 0" class="favorite-count">{{ favoriteCount }}</span>
     </div>
     <img src="@/assets/user.svg" alt="User" @click="goToLogin" />
-    <img src="@/assets/cart.svg" alt="Cart" />
+    
+    <img src="@/assets/cart.svg" alt="Cart" @click="goToCart" />
+    <div v-if="countCartProducts" id="qty">{{ countCartProducts }}</div>
+     
+    
   </div>
 
   <div class="container">
@@ -82,10 +86,15 @@
 </template>
 
 <script>
+
 import { useFavoriteStore } from '@/stores/Favorite';
 import { useProductStore } from '@/stores/Products';
 
 export default {
+  setup(){
+    const store = useProductStore()
+    return { store }
+  },
   data() {
     return {
       isSearchVisible: false,
@@ -103,6 +112,9 @@ export default {
     favoriteCount() {
       return this.favorites.length;
     },
+    countCartProducts(){
+      return this.store.cart.length
+    }
   },
   methods: {
     removeFromFavorites(productId) {
@@ -117,6 +129,9 @@ export default {
     },
     goToLogin() {
       this.$router.push('/login');
+    },
+    goToCart(){
+      this.$router.push('/shopping-cart');
     },
     handleSearch() {
       const query = this.searchQuery.trim().toLowerCase();
@@ -390,6 +405,7 @@ html, body, #app {
 .action-icons {
   display: flex;
   justify-content: flex-end;
+  /* background-color: #ff6b6b; */
 }
 
 .action-icons img {
@@ -457,5 +473,17 @@ html, body, #app {
 
 .search-box button:hover {
   background-color: #ff4a4a;
+}
+#qty{
+  color: whitesmoke;
+  font-size: 10px;
+  font-weight: 700;
+  background-color: #ff6b6b;
+  padding: 0px 5px 0px 5px;
+  border-radius: 50%;
+  float: right;
+  margin-left: -10px;
+  height: fit-content;
+ 
 }
 </style>

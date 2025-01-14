@@ -82,8 +82,8 @@
         </div>
         <div class="summary-details">
           <div class="line-item">
-            <span>Cart Total (2 items)</span>
-            <span>${{ cartTotal }}</span>
+            <span>Cart Total ({{ amountItems }} items)</span>
+            <span>${{ subtotal() }}</span>
           </div>
           <div class="line-item">
             <span>Delivery fee</span>
@@ -92,11 +92,17 @@
         </div>
         <div class="total">
           <span class="font">Total</span>
-          <span>${{ total }}</span>
+          <span>${{ subtotal() }}</span>
         </div>
         <div class="actions">
-          <button @click="goBack" class="back-btn">Back to cart</button>
-          <button @click="payNow" class="pay-btn">Pay Now</button>
+          <router-link to="/shopping-cart">
+            <button @click="goBack" class="back-btn">Back to cart</button>
+          </router-link>
+          <router-link to="/payment">
+            <button @click="payNow" class="pay-btn">Pay Now</button>
+          </router-link>
+          
+          
         </div>
       </div>
     </div>
@@ -104,8 +110,14 @@
 </template>
 
 <script>
+import { useProductStore } from '@/stores/Products';
+
 export default {
   name: "CheckoutForm",
+  setup(){
+    const store = useProductStore()
+    return { store }
+  },
   data() {
     return {
       step: 2,
@@ -116,13 +128,13 @@ export default {
         district: "",
         address: "",
       },
-      provinces: ["Province 1", "Province 2", "Province 3"],
+      provinces: ["Banteay Meanchey", "Battambang", "Kampong Cham", "Kampong Chhnang", "Kampong Speu", "Kampong Thom", "Kandal", "Koh Kong", "Kratie", "Mondulkiri", "Oddar Meanchey", "Pailin", "Phnom Penh", "Preah Vihear", "Prey Veng", "Pursat", "Ratanakiri", "Siem Reap", "Sihanoukville", "Stung Treng", "Svay Rieng", "Takeo", "Tboung Khmum", "Kep", "Pursat"],
       districts: ["District 1", "District 2", "District 3"],
       deliveryOptions: [
         {
           id: 1,
           name: "J&T",
-          logo: "src/assets/img/JNT.png",
+          logo: "src/assets/img/JNT.jpg",
           description: "Please pay first before we can send your products.",
           price: "$0.00",
         },
@@ -143,16 +155,26 @@ export default {
       ],
       selectedDelivery: 1,
       coupon: "",
-      cartTotal: 21.88,
+      cartTotal: 0,
       deliveryFee: 0.0,
     };
   },
   computed: {
+    amountItems(){
+      return this.store.cart.length
+    },
     total() {
       return (this.cartTotal + this.deliveryFee).toFixed(2);
     },
   },
   methods: {
+    subtotal(){
+      let subtotal = 0;
+      for(let cartItem of this.store.cart){
+        subtotal = subtotal + cartItem.totalPrice
+      }
+      return subtotal
+    },
     saveAddress() {
       alert("Address saved!");
     },
@@ -191,6 +213,7 @@ export default {
 .image{
   width: 30px;
   height: 30px;
+  margin-right: 10px;
 }
 
 .description{
@@ -248,6 +271,7 @@ export default {
   border-radius: 30px;
   padding: 20px;
   height: 300px;
+  margin-left: 100px;
 }
 
 /* Billing Address */
@@ -255,6 +279,10 @@ export default {
 .delivery-option h2 {
   margin-bottom: 10px;
   font-size: 18px;
+}
+
+.billing-address{
+  margin-bottom: 50px;
 }
 
 .form-row {
@@ -292,7 +320,7 @@ select {
 
 .view-btn {
   background: white;
-  color: black;
+  color: #808080;
 }
 
 /* Delivery Option */
@@ -373,7 +401,7 @@ select {
 
 .back-btn {
   background-color: white;
-  color: black;
+  color: #808080;
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
@@ -392,5 +420,10 @@ select {
 }
 .note{
   font-size: 10px;
+}
+.name{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

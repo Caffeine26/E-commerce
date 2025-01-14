@@ -1,15 +1,24 @@
 <template>
-  <div class="single-product" :id="product.id">
-    <div class="img-container">
-      <router-link :to="productLink" class="single-product-link">
-        <img v-if="product.img" :src="product.img" :alt="product.name" />
-      </router-link>
-      <div v-if="product.promotionAsPercentage" class="sale">-{{ product.promotionAsPercentage }}%</div>
-    </div>
+
+  
+    <div class="single-product" :id="product.id" @click="returnId">
+    <router-link :to="productLink">
+      <div class="img-container">
+
+        <!-- Bind the image source dynamically -->
+        <img v-if="product.image"
+        :src="product.image[0]" :alt="product.name" />
+        <div v-if="product.promotionAsPercentage" class="sale">-{{ product.promotionAsPercentage }}%</div>
+
+      </div>
+    </router-link>
+
     <div class="product-content">
       <h5 class="name">{{ product.name }}</h5>
       <div class="rating">
+        <span class="discountedPrice">${{ discountedPrice }}</span>
         <span class="price">${{ product.price }}</span>
+        
         <span class="icon">
           <!-- Favorite Icon -->
           <img
@@ -44,6 +53,14 @@ export default {
       const favoriteStore = useFavoriteStore();
       return (productId) => favoriteStore.favorites.some((fav) => fav.id === productId);
     },
+
+    productLink(){
+      return '/all-products/'+this.product.id
+    },
+    discountedPrice(){
+      return parseFloat((this.product.price * ((100-this.product.promotionAsPercentage)/100)).toFixed(2))
+    }
+
   },
   methods: {
     toggleFavorite(product) {
@@ -102,10 +119,15 @@ export default {
   align-items: center;
 }
 
-.rating .price {
+.rating .discountedPrice {
   font-size: 16px;
   color: #e74c3c;
   font-weight: bold;
+}
+
+.price{
+  font-size: 16px;
+  text-decoration: line-through;
 }
 
 .rating .icon img {

@@ -1,10 +1,12 @@
 <template>
+    <Header />
     <div class="product">
       <product-description
       :id="product.id"
       :name="product.name"
       :reviewAmount="reviewAmount"
       :price="product.price"
+      :discount="product.promotionAsPercentage"
       :imgUrl="product.image"
       :briefDescription="review.description"
       :avgRating="getAverageRating"
@@ -39,7 +41,8 @@
         @click="toggleReview"
         :class="{
           'selected' : showRev,
-          'empty' : !showRev
+          'empty' : !showRev,
+          'header': true
         }"
         >Reviews</div>
         <div id="divider"> | </div>
@@ -47,7 +50,8 @@
         @click="toggleQA"
         :class="{
           'selected' : showQA,
-          'empty' : !showQA
+          'empty' : !showQA,
+          'header': true
         }"
         >Q&A</div>
       </div>
@@ -71,7 +75,6 @@
           >
           </review>
         </div>
-        <div class="moreReviews">See more reviews</div>
         
       </div>
 
@@ -86,6 +89,7 @@
       </div>
   
     </div>
+    <Footer />
     
   </template>
   
@@ -97,6 +101,8 @@
   import StarRating from './../components/StarRating.vue'
   import SingleProduct from '@/components/SingleProduct.vue';
   import UserComment from '@/components/UserComment.vue';
+  import Header from "@/components/Header.vue";
+  import Footer from "@/components/Footer.vue";
 
   export default{
     setup(){
@@ -109,7 +115,9 @@
       Review,
       StarRating,
       SingleProduct,
-      UserComment
+      UserComment,
+      Header,
+      Footer
     },
   
     data(){
@@ -120,7 +128,7 @@
         relatedProducts : Array,
         showRev : true,
         showQA : false,
-        instruction: 'Write down your question and ask away'
+        instruction: 'Write down your question and ask away!'
       }
     },
     methods : {
@@ -248,14 +256,6 @@
   .qna{
   
   }
-  .moreReviews{
-    width: fit-content;
-    color: white;
-    font-weight: bolder;
-    background-image: linear-gradient(to bottom, #B9BA7E, #A56B3D);
-    padding: 10px 20px 10px 20px;
-    border-radius: 10px;
-  }
   .otherProducts{
     display: flex;
     flex-direction: column;
@@ -313,6 +313,9 @@
 .empty{
   color:#969191;
   border-bottom: none;
+}
+.header:hover{
+  cursor: pointer;
 }
   </style>
   

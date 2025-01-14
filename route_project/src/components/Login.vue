@@ -80,7 +80,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @font-face {
   font-family: "QuickSand";
   src: url("./assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf");

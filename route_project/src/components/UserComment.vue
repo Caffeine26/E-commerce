@@ -53,10 +53,10 @@ export default{
                 console.log('reviews', selectedReview)
                 selectedReview.unshift(review)
             } else if(this.inputType == 'question'){
-                const selectedQuestion = this.store.previews[pid].questions
-                console.log('questions', selectedReview)
-                selectedQuestion.unshift(review)
-                console.log(selectedQuestion)
+                // const selectedQuestion = this.store.previews[pid].questions
+                // console.log('questions', selectedReview)
+                // selectedQuestion.unshift(review)
+                // console.log(selectedQuestion)
             }
             
         },
@@ -64,11 +64,12 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 .reviewBox{
   position: relative;
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
   /* background-color: #A56B3D; */
 }
 .userProfile{

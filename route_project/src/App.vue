@@ -35,8 +35,9 @@ export default{
       const response = await fetch('http://localhost:3000/api/products');
       const data = await response.json();
       this.store.products = data;
-      console.log(this.store.products)
+      
       this.store.getProductImgs()
+      console.log(this.store.products)
 
     } catch (error) {
       console.error('Error during mounted lifecycle hook:', error);
